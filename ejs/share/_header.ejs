@@ -1,0 +1,28 @@
+<head>
+  <meta charset="UTF-8" />
+  <title>AR Memory Data Editor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="apple-touch-icon" sizes="180x180" href="./images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon-16x16.png">
+  <link rel="manifest" href="./site.webmanifest">
+  <link rel="mask-icon" href="./images/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />
+  <link rel="stylesheet" type="text/css" href="css/custom.css" />
+  <script src="javascript/jquery-1.11.1.min.js"></script>
+  <script src="javascript/jquery.mobile-1.4.5.min.js"></script>
+  <script src="javascript/encoding.min.js"></script>
+  <script src="javascript/papaparse_customized.js"></script>
+  <% if (serverMode) { %>
+  <script src="/socket.io/socket.io.js" type="text/javascript"></script>
+  <script src="javascript/ar_memory_socket.js"></script>
+  <% } %>
+  <script src="javascript/const.js"></script>
+  <script src="javascript/share.js"></script>
+  <script src="javascript/channel.js"></script>
+  <script src="javascript/memory_data.js"></script>
+  <script src="javascript/detail.js"></script>
+  <script src="javascript/list.js"></script>
+</head>

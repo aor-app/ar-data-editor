@@ -1,0 +1,538 @@
+<!DOCTYPE html> 
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>AR Memory Data Editor:Help</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon-16x16.png">
+    <link rel="manifest" href="./site.webmanifest">
+    <link rel="mask-icon" href="./images/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="css/help.css?d=20180529d" />
+    <script src="javascript/jquery-1.11.1.min.js"></script>
+    <script src="javascript/jquery.mobile-1.4.5.min.js"></script>
+  </head>
+  <body>
+	<div id="help-j" class="en">
+      <div data-role="header" data-position="fixed" data-tap-toggle="false">
+        <a href="#" class="ui-btn js-close-window">Close</a> 
+        <h1>ARdataEditor:Help</h1>
+        <a href="./index.html" target="_blank" class="ui-btn">OpenApp</a>
+      </div>
+<!--       <div role="main" class="ui-content"><br /> -->
+      <div data-role="main" class="ui-content"><br />
+    <div data-role="controlgroup" data-type="horizontal">
+        <a href="./index.html" target="_blank" class="ui-btn">メモリデータ編集アプリを新しく開く</a>
+        <a href="#" class="ui-btn js-close-window">このページを閉じる</a>
+    </div>
+    <h3>AR-DV10/AR-DV1 メモリデータ編集アプリの使いかた</h3>
+    <h3 id="infoJ">ご案内</h3>
+    <p>このアプリは、ウェブブラウザで動作し、AR-DV10またはAR-DV1受信機のメモリチャンネルデータを編集できます。</p>
+    <p>アプリのページを開いたあとは、ブラウザ内でのみ動作します。動作にあたっては、データ内容の通信を行わず、ウェブサーバーはデータ処理を行いません。</p>
+    <p>注意：このアプリはウェブブラウザ内で動作しますので、ブラウザで「ページを更新」すると読み込んでいたデータは初期化され失われますのでご注意ください。</p>
+    <br /><hr />
+    <h4>保証の否認と免責について</h4>
+    <p>このアプリは、エーオーアールによって「現状のまま」提供されるものであり、いかなる保証も提供されません。<br/>
+	    エーオーアールは、このアプリについて、アップデート、修正またはサポートをする義務を負わないものとします。</p>
+    <br /><hr />
+    <h3 id="envJ">環境条件</h3>
+    <p>次のウェブブラウザの最新バージョンをお使いください。</p>
+    <ul>
+	    <li>Google Chrome - Windows (推奨)</li>
+    </ul>
+	<p>次のブラウザは環境により使用できる場合があります。</p>
+    <ul>
+	    <li>Google Chrome - macOS</li>
+	    <li>Safari - macOS</li>
+	    <li>Microsoft Edge - Windows</li>
+	    <li>mobile Google Chrome - Android, iOS</li>
+	    <li>mobile Safari - iOS</li>
+    </ul>
+    <p>注意：Internet Explorerでは動作しません。</p>
+    <p>注意：iOSでお使いの場合：iOSの制約のため、保存ファイル名を指定しても "Unknown.csv" や "Unknown.pdf" などのファイル名になる場合がありますのでファイル管理アプリやSDカードにコピーするときに半角英数字8文字以内(拡張子は.csv)の適切なファイル名に変更してお使いください。</p>
+    <br /><hr />
+    <h3 id="funcJ">機能</h3>
+    <h4>1.メモリデータ編集</h4>
+    <ul>
+	    <li>受信機でSDカードにバックアップしたメモリチャンネルファイル(memch.csv)を読み込んで、内容を編集でき、新しいファイルに保存できます。</li>
+		<li>system.csvファイルを読み込んで、これに含まれるメモリチャンネルデータを元に新しいメモリチャンネルファイルを保存できます。</li>
+		<li>新規に未登録の状態から内容を編集することもできます。</li>
+		<li>新しいファイルのファイル名は、"mc"+YYMMDD(作成日の西暦年下2桁、月2桁、日2桁)(拡張子.csv)が初期値ですが、保存時に半角英数字8文字以内で変更もできます。(例：mc180420.csv)</li>
+    </ul>
+    <h4>2.AR-DV10・AR-DV1間のメモリデータの変換</h4>
+    <ul>
+	    <li>ファイルを保存するときに、機種を選択できます。互換性のない項目は初期値が設定されます。</li>
+    </ul>
+    <h4>3.周波数リストファイルから連続チャンネルを登録</h4>
+    <ul>
+	    <li>1行以上の周波数リストファイル(周波数とタイトルのカンマ区切りテキストファイル)を使用して、連続する未登録チャンネルに、その周波数とタイトルのチャンネルを一括登録できます。他の項目は初期値用テンプレートファイルの内容を使用します。(同じメモリバンク内に限ります。)</li>
+    </ul>
+    <h4>4.開始周波数とステップから連続チャンネルを登録</h4>
+    <ul>
+	    <li>開始周波数とステップ周波数を指定して、連続する未登録チャンネルに、ステップ周波数の間隔で指定数のチャンネルを登録できます。他の項目は初期値用テンプレートファイルの内容を使用します。(同じメモリバンク内に限ります。)</li>
+    </ul>
+    <h4>5.初期値用テンプレートファイル作成</h4>
+    <ul>
+	    <li>連続チャンネル登録時に使用するテンプレートファイルを作成できます。</li>
+	    <li>00番の内容のみが使用されます。複数行を登録した場合は、使用したい行を00番に入れ替えて新しいファイルに保存してお使いください。</li>
+	    <li>新しいファイルのファイル名は、"tp"+YYMMDD(作成日の西暦年下2桁、月2桁、日2桁)(拡張子.csv)が初期値ですが、保存時に半角英数字8文字以内で変更もできます。(例：tp180420.csv)</li>
+    </ul>
+    <h4>備考</h4>
+    <ul>
+	    <li>AR-DV10用、AR-DV1用メモリチャンネルファイルは、それぞれの機種でのみメモリチャンネルデータとして受信機に読み込むことができます。</li>
+	    <li>初期値用テンプレートファイルとして作成したファイルは、メモリチャンネルデータとして受信機に読み込むことはできません。</li>
+	    <li>初期値用テンプレートファイルの代わりに、メモリチャンネルファイルを使用すると、そのBK00-CH00の内容をテンプレートとして使用します。</li>
+    </ul>
+    <img src="help-img/chlist.png" width="80%" alt="">
+    <br /><hr />
+    <h3>ボタン等の説明</h3>
+    <img src="help-img/new_help.png" alt="">
+    <h4>[New](新規)<br />
+	    ... 新規に未登録の状態からメモリチャンネルファイル（または、初期値用テンプレートファイル）を作る</h4>
+    <ol>
+	    <li>[New]をクリック。</li>
+	    <li>FileType(ファイルタイプ)(Memory Channel File、または、Template)を選択。</li>
+	    <li>Model(機種)(AR-DV1、または、AR-DV10)を選択。</li>
+	    <li>[Create]をクリック</li>
+    </ol>
+    <h4>[Open](開く)<br />
+	    ... 受信機でSDカードにバックアップしたメモリチャンネルファイル(memch.csv)を読み込む</h4>
+    <ol>
+	    <li>[Open]をクリック。</li>
+	    <li>目的のファイルを選択して開く。</li>
+    </ol>
+    <br />
+    <h4>[Save](保存)<br />
+	    ... 現在の内容を新しいファイルに保存する</h4>
+    <ol>
+	    <li>[Save]をクリック。</li>
+	    <li>Model(AR-DV1、または、AR-DV10)を選択。</li>
+	    <li>File Name(ファイル名)を確認。(変更も可能です。半角英数字8文字以内。拡張子は csv )</li>
+	    <li>ファイルが、ダウンロードされます。(環境によっては、新しいウインドウに表形式で表示される場合がありますが、それをファイルに保存(拡張子は csv)してお使いください。)</li>
+    </ol>
+    <p>ファイルの保存場所は環境によりますが一般的にはブラウザでの「ダウンロード」と同じです。</p>
+    <img src="help-img/savefile.png"  alt="">
+    <h4>[Help](ヘルプ)<br />
+	    ... ヘルプページを開く</h4>
+    <ol>
+	    <li>[Help]をクリック。</li>
+	    <li>ヘルプページが開きます。</li>
+    </ol>
+    <h4>[(+) File Info](+ファイル情報)<br />
+	    ... 読み込んだファイルの情報を表示</h4>
+    <ol>
+	    <li>[(+) File Info] 行をクリック。</li>
+	    <li>表示部分が開いて、読み込んだファイルの情報を表示します。</li>
+	    <li>表示部分をたたむこともできます。[(-) File Info](-ファイル情報) 行をクリック。</li>
+    </ol>
+    <img src="help-img/fileinfo.png" alt="">
+    <br /><br /><br />
+    <h4>Memory Bank [00 (v)]<br />
+	    ... メモリバンクを切り替える</h4>
+    <img src="help-img/membank.png" alt="">
+    <ol>
+	    <li>数字部分をクリックして、目的のメモリバンク番号を選択する。</li>
+    </ol>
+    <br />
+    <img src="help-img/cut_clear.png" alt="">
+    <h4>[Cut](カット)<br />
+	    ... 別の位置に挿入(Insert)するために、選択(Noにチェック)したチャンネルをカットする<br />
+    →[Insert](挿入)<br />
+    ... カットしたチャンネル内容を選択(Noにチェック)したチャンネル番号に挿入(Insert)する(上書きされません)</h4>
+    <ol>
+	    <li>目的のチャンネル番号(No)にチェックをつける。(複数のチャンネル番号にチェックをつけることもできます。挿入先のメモリバンクに同数の未登録チャンネルが必要です。)</li>
+	    <li>「Selected」(選択された)表示を確認して[Close]をクリック。</li>
+	    <li>挿入したい位置(異なるメモリーバンクも可)のチャンネル番号(No)1つにチェックをつける。</li>
+	    <li>[Insert](挿入)をクリック。(カットしたチャンネル内容が挿入され、もとのチャンネル番号は詰められて、同じメモリバンクの後方のチャンネル番号が未登録になります。)</li>
+    </ol>
+    <h4>[Copy](コピー)<br />
+	    ... 別の位置に挿入(Insert)するために、選択(Noにチェック)したチャンネルをコピーする<br />
+    →[Insert](挿入)<br />
+    ... コピーしたチャンネル内容を選択(Noにチェック)したチャンネル番号に挿入(Insert)する(上書きされません)</h4>
+    <ol>
+	    <li>目的のチャンネル番号(No)にチェックをつける。(複数のチャンネル番号にチェックをつけることもできます。挿入先のメモリバンクに同数の未登録チャンネルが必要です。)</li>
+	    <li>「Selected」(選択された)表示を確認して[Close]をクリック。</li>
+	    <li>挿入したい位置(異なるメモリーバンクも可)のチャンネル番号(No)1つにチェックをつける。</li>
+	    <li>[Insert](挿入)をクリック。(コピーしたチャンネル内容が挿入されます。もとのチャンネル番号の内容はそのままです。)</li>
+    </ol>
+    <h4>[Remove](削除)<br />
+	    ... 選択(Noにチェック)したチャンネルを削除</h4>
+    <ol>
+	    <li>目的のチャンネル番号(No)にチェックをつける。(複数のチャンネル番号にチェックをつけることもできます。)</li>
+	    <li>[Remove](削除) をクリック。(選択(Noにチェック)したチャンネルを削除して、チャンネル番号は詰められて同じメモリバンクの後方のチャンネル番号が未登録になります。)<br />
+	    <b>注意：取り消し(Undo)はできません。</b></li>
+    </ol>
+    <br /><br />
+    <h4>[Clear](消去)<br />
+	    ... 選択(Noにチェック)したチャンネルを削除</h4>
+    <ol>
+	    <li>目的のチャンネル番号(No)にチェックをつける。(複数のチャンネル番号にチェックをつけることもできます。)</li>
+	    <li>[Clear](消去) をクリック。(選択(Noにチェック)したチャンネルが未登録になります。)<br />
+	    <b>注意：取り消し(Undo)はできません。</b></li>
+    </ol>
+
+    <img src="help-img/multi_sort.png" alt="">
+    <h4>[MultipuleDataCreate](複数データ登録)<br />
+	    ... 選択(Noにチェック)したチャンネルから初期値用テンプレートファイルを使用して複数の連続チャンネルを登録(周波数リストファイルから登録、または、開始周波数とステップから登録)</h4>
+    <ol>
+	    <li>登録したい位置のチャンネル番号(No)1つにチェックをつける。<br />
+	    そのチャンネル番号から連続する(同じメモリバンク内の)未登録のチャンネルに登録できます。</li>
+	    <li>[MultipuleDataCreate](複数データ登録)をクリック。</li>
+	    <li>TemplateFile(テンプレートファイル)欄で初期値用テンプレートファイルを選択する。</li>
+	    <li>Frequency(周波数)(From frequencyListFile(周波数リストファイルから)、または、From Input(入力値から))を選択。</li>
+	    <li>- <b>周波数リストファイルから登録する場合</b><br />
+		    Frequency List File欄で周波数リストファイルを選択して、[Create]をクリック。<br />
+			<img src="help-img/muitidatacreate.png" alt=""><br /><br />
+   		    - <b>開始周波数とステップから登録する場合</b><br />
+		    Start Frequency(MHz)(開始周波数)、Step Frequency(MHz)(ステップ周波数)、Number of additional channels(登録チャンネル数)を半角数字で入力して、[Create]をクリック。<br />
+		    例：開始周波数(MHz) 351.2、ステップ周波数(MHz) 0.00625、登録チャンネル数 30<br /><br /><br /><br />
+			<img src="help-img/muitidatastep.png" alt="">
+		</li>
+    </ol>
+
+    <h4>[MoveUp](上に移動) [MoveDown](下に移動)<br />
+	    ... 選択(Noにチェック)したチャンネル内容をすぐ上(または、下)に移動</h4>
+	<ol>
+		<li>移動したいチャンネル番号(No)にチェックをつける。</li>
+		<li>上に移動したい場合は[MoveUp]をクリック。<br />
+		下に移動したい場合は[MoveDown]をクリック。</li>
+	    </ol>
+	<h4>[Sort](ソート)<br />
+		... メモリバンク内でチャンネル内容の周波数とモードでソート</h4>
+	<ol>
+		<li>[Sort]をクリック。</li>
+		<li>第１優先キーFrequency(周波数)、第２優先キーMode(モード)のソート方向ASC(昇順)、または、DESC(降順)を選択する。(その他の項目や順序は選択できません。)</li>
+		<li>[Sort]をクリック。</li>
+	</ol>
+	<h4>検索欄<br />
+		... 周波数、タイトル、モードを部分一致検索で絞り込み表示</h4>
+	<ol>
+		<li>検索欄に半角文字を入力するつど、部分一致するチャンネルに絞り込み表示します。(特定の項目に限定できません。)</li>
+	</ol>
+	<img src="help-img/searchwindow.png" alt=""><br /><br /><br /><br />
+	<img src="help-img/column_popup.png" alt="">
+	<h4>[Columns...](カラム表示)<br />
+		... No、Frequency、Title、Mode、Editの各カラムを表示、非表示選択</h4>
+	<ol>
+		<li>[Columns...]をクリック。</li>
+		<li>表示するカラムにチェックをつける。<br />
+		カラム選択部は、それ以外のページ部分をクリックすると閉じます。</li>
+	</ol>
+	<br /><hr />
+	<h3>チャンネル内容表示</h3>
+	<p>Memory Bank(メモリバンク)欄で選択したメモリバンク番号のチャンネルを一覧表示します。</p>
+	<ul>
+		<li>No (チャンネル番号)</li>
+		<li>Frequency (周波数、単位:MHz)</li>
+		<li>Title (タイトル)</li>
+		<li>Mode (モード) ... モードの他に、IF帯域幅、スケルチ等の設定も表示します。</li>
+		<li>Edit(編集)ボタン ... そのチャンネル内容を編集する画面を開きます</li>
+	</ul>
+	<br />
+	<h3>チャンネル内容の編集</h3>
+	<p>編集目的のチャンネル行のEdit(編集)ボタンを押すと、そのチャンネルの内容を変更できます。Mode(モード)によって編集できる項目が表示されます。各項目の内容については受信機と同じです。</p>
+	<p>変更内容を登録するときは、右上の[OK]をクリック。</p>
+	<p>(変更せずに戻る場合は、[Back](戻る)をクリック。)</p>
+	<img src="help-img/checitdstr.png" width="80%" alt="">
+	<br /><hr />
+	<h3>周波数リストファイルの作り方</h3>
+	<p>周波数とタイトルのカンマ区切りテキストを作成します。</p>
+	<ul>
+		<li>周波数：MHz単位の半角数字、小数点以下は5桁以内</li>
+		<li>タイトル：12文字以内の半角英数字、半角カタカナ(文字種は入力画面に記載)(省略可)</li>
+		<li>改行コード：CR+LF(Windows)、LF(mcacOS、iOS、Android)、CR いずれも可</li>
+	</ul>
+	<p>1行に周波数とタイトルをカンマ区切りで記載して改行してください。</p>
+	<span>例：</span><br />
+	<span class="code_help">
+	351.2,DCR-01ch<br />
+	351.20625,DCR-02ch<br />
+	351.2125,DCR-03ch<br />
+	</span>
+	<p>一度に登録できるチャンネル数は、登録先のメモリーバンクの連続する未登録チャンネル数までです。それを超える行数の周波数リストファイルは使用できません。</p>
+	<br /><br /><hr />
+	<h3>主なError(エラー)表示</h3>
+	<img src="help-img/errorselectch.png" alt="">
+	<h4>・Please select channels to xxxx.[Close]<br />
+		&nbsp;　(xxxxのためにチャンネルを選択してください)</h4>
+	<h4>・[Save File] The file name can be up to 8 characters.<br />
+		&nbsp;　(ファイル名は8文字以内です)</h4>
+	<h4>・[Save File] File name is too long.<br />
+		&nbsp;　(ファイル名が長すぎます)</h4>
+	<h4>・Error has occurred. Please check the following items.<br />
+		&nbsp;　(次の項目を確認・修正してください)</h4>
+	<h4>・* FREQ is out of range.<br />
+		&nbsp;　(周波数が範囲外です)</h4>
+	<h4>・* Characters that cannot be used are included.<br />
+		&nbsp;　(使用できない文字があります)</h4>
+	<h4>・* Please check XXXX value.<br />
+		&nbsp;　(XXXX項目の値を確認・修正してください)</h4>
+      </div>
+    <div data-role="footer">
+      <h1 class="ui-title">&copy;2018 AOR, LTD.</h1>
+      <p class="version">Ver.1.1.3(20180419)</p>
+    </div>
+	</div>
+
+	<div id="help-e" class="en">
+      <div data-role="header" data-position="fixed" data-tap-toggle="false">
+        <a href="#" class="ui-btn js-close-window">Close</a> 
+        <h1>ARdataEditor:Help</h1>
+        <a href="./index.html" target="_blank" class="ui-btn">OpenApp</a>
+      </div>
+      <div data-role="main" class="ui-content">
+    <div data-role="controlgroup" data-type="horizontal">
+        <a href="./index.html" target="_blank" class="ui-btn">Open AR-DATA-EDITOR</a>
+        <a href="#" class="ui-btn js-close-window">Close</a>
+    </div>
+    <h3>AR DATA EDITOR – A convenient browser based memory data editor for the AR-DV1 and AR-DV10 receivers</h3>
+    <hr />
+    <h3 id="envE">Hardware/software requirements:</h3>
+    <ul>
+	    <li>A browser. Most common browsers should work, except Internet Explorer.</li>
+	    <li>An SD card reader. The data is read-off and written to the SD card to which the receiver’s memory data has been copied to. <u class="bule">Connecting the receiver to your PC is not required!</u></li>
+    </ul>
+    <hr />
+    <h3 id="todoE">What does AR DATA EDITOR allow me to do?</h3>
+    <ul>
+	    <li>Load, edit and save your receiver’s memory channel data.</li>
+	    <li>Create new frequency databases</li>
+	    <li>File format conversion between AR-DV1 and AR-DV10. In other words, a frequency database of one receiver can be opened and saved into a format the other receiver can understand.</li>
+    </ul>
+    <hr />
+    <h3 id="funcE">Let's get started!</h3>
+    <p>Go to <a href="http://www.aorja.com/AR-DATA-EDITOR/" target="_blank">http://www.aorja.com/AR-DATA-EDITOR/</a></p>
+    <p class="bule">***Important: Do never click the browser’s “back” button while editing your database, or all non-saved changes will be lost!***</p>
+    <p>The following page will be displayed.</p>
+    <img src="help-img-e/c1-8chlist.png" width="80%" alt="Window of AR DATA EDITOR">
+    <br />
+    <p>Insert the SD card containing your receiver memory data into your PC’s SD card reader. It will be a blank SD card if you are creating a database for the first time.</p>
+    <hr />
+    <h3>Tabs explained</h3>
+    <img src="help-img-e/c1new_help_40.png" alt="(1)New Open Save Help">
+    <h4>[New]<br />
+	    Create a new memory channel file, or a default template file</h4>
+    <ol>
+	    <li>Click [New]</li>
+	    <li>Select the file type to create (Memory Channel file or Template file). If it’s your first use of this software, chose “Memory Channel file”.</li>
+	    <li>Select the receiver model (AR-DV1 or AR-DV10)</li>
+	    <li>Click [Create]</li>
+    </ol>
+    <h4>[Open]<br />
+	    Open a memory channel file (memch.csv) which has already been created by the receiver</h4>
+    <ol>
+	    <li>Click [Open]</li>
+	    <li>Select and open the desired file</li>
+    </ol>
+    <h4>[Save]<br />
+	    Save current contents to a new file</h4>
+    <ol>
+	    <li>Click [Save]</li>
+	    <li>Select the receiver model (AR-DV1 or AR-DV10)</li>
+	    <li>Enter a file name (up to 8 characters) (keep the extension [.csv] as it is)</li>
+	    <li>Click [Save] to save the file to your PC (the folder it has been saved to depends on your browser’s settings)</li>
+    </ol>
+    <img src="help-img/savefile.png" alt="Save File window">
+    <h4>[Help]<br />
+    Open the help page (this document)</h4>
+    <ol>
+	    <li>Click [Help]. The help file opens in a new tab.</li>
+	    <li>Read all instructions</li>
+    </ol>
+    <br />
+    <img src="help-img-e/c2_40.png" alt="(2)">
+    <h4 class="h4ind">[(+) File Info]<br />
+	    View details about the memory channel data file being imported</h4>
+    <ol>
+	    <li>Click [(+) File Info]</li>
+	    <li>Displays the file name and its extension, the type of database, receiver model, firmware version and date of file registration</li>
+	    <li>You can minimize this information by clicking on [(-) File Info]</li>
+    </ol>
+    <img src="help-img/fileinfo.png" alt="">
+    <br /><br /><br />
+    <img src="help-img-e/c3_40.png" alt="(3)">
+    <h4 class="h4ind">Memory Bank [00 (v)]<br />
+	    Select a memory bank number</h4>
+    <img src="help-img/membank.png" alt="Memory Bank">
+    <ol>
+	    <li>Click the arrow and select the desired memory bank number between 00 and 39.</li>
+    </ol>
+    <br />
+    <img src="help-img-e/c4_40.png" alt="(4)"> <img src="help-img/cut_clear.png" alt="Cut Copy Insert Remove Clear">
+    <h4>[Cut]<br />
+	    Cut selected memory channel data and to paste it elsewhere</h4>
+    <ol>
+	    <li>Select one or more channel numbers (No) to cut</li>
+	    <li>Click [Close]</li>
+	    <li>Select a memory bank and channel number (No) where you would like to paste the data</li>
+	    <li>Click [Insert] to paste the data.</li>
+    </ol>
+    <h4>[Copy]<br>
+	    Copy selected memory channel data to another bank/memory channel</h4>
+    <ol>
+	    <li>Select one or more channel numbers (No) to copy</li>
+	    <li>Click [Close]</li>
+	    <li>Select a memory bank and channel number (No) where you would like to copy the data</li>
+	    <li>Click [Copy] to copy the data. </li>
+    </ol>
+    <h4>[Insert]<br />
+	    Paste memory channels which have been previously copied by the [Copy] or [Cut] functions.<br />
+	    (Destination memory channels must be empty)</h4>
+    <ol>
+	    <li>Select a memory channel number (No) to paste the data into.</li>
+    </ol>
+    <h4>[Remove]<br>
+	    Delete selected memory channels <span class="bule">(the deleted channels will be occupied by the following registered memory channels in the list)</span></h4>
+    <ol>
+	    <li>Select one or more memory channels to be deleted</li>
+	    <li>Click [Remove] to delete the selected memory channels. (Warning: This action cannot be reverted!)</li>
+    </ol>
+    <br /><br />
+    <h4>[Clear]<br />
+	    Delete selected memory channels <span class="bule">(the "open" channels will stay unoccupied)</span></h4>
+    <ol>
+	    <li>Select one or more memory channels to be deleted</li>
+	    <li>Click [Clear] to delete the selected memory channels. (Warning: This action cannot be reverted!)</li>
+    </ol>
+
+    <img src="help-img-e/c5_40.png" alt="(5)"> <img src="help-img/multi_sort.png" alt="MultipleDataCreate MoveUp MoveDown Sort">
+    <h4>[MultipleDataCreate]<br />
+	    Bulk register frequency channels using templates</h4>
+    <ol>
+	    <li>Select an empty memory bank and memory channel number (No) from which you would like to start bulk registration of frequency channels.</li>
+	    <li>Click [MultipuleDataCreate]</li>
+    </ol>
+    <div class="divind">
+	    <p>There are 2 ways to proceed:</p>
+	    <h4><b><u>- Method A: Manually set a start frequency and step size</u></b></h4>
+	    <p>A: Select a previously created “template” file which contains memory data settings you would like to replicate at a larger scale.</p>
+	    <div class="dlbox">
+		    <p>Instructions on how to create a template:</p>
+		    <p>[New] -> FileType [Template File] -> Select receiver model -> [Create]</p>
+		    <p>Select a memory channel and edit it by applying the settings you would like to replicate at a larger scale.</p>
+		    <p>[Save]</p>
+	    </div>
+	    <br />
+	    <p>B: Click the arrow and select [From Input]</p>
+	    <img src="help-img-e/A-FMultipleDataCr.png" width="40%" alt=""><br />
+	    <p>C: Set the start frequency (351.2 MHz in this example).</p>
+	    <p>D: Set the frequency step (0.00625MHz or 6.25kHz in this example).</p>
+	    <p>E: Set the number of channels you would like to create this way. Remember that you can’t create more channels than there are available in the memory bank you selected for this task.</p>
+	    <p>F: Click [CREATE] and the memory bank you selected will be populated accordingly.</p>
+	    <br />
+	    <h4><b><u>- Method B: Importing a  frequency list file</u></b></h4>
+	    <p>A: Select a previously created “template” file which contains memory data settings you would like to replicate at a larger scale.</p>
+	    <p>B: Click the arrow and select [From FrequencyListFile].</p>
+	    <img src="help-img-e/A-DMultipleDataCr.png" width="40%" alt=""><br />
+	    <p>C: Select a previously created frequency list file.</p>
+	    <div class="dlbox">
+		    <p>Format instructions for the creation of the frequency list file (.txt extension):</p>
+		    <p>Frequency and title as comma-delimited text</p>
+		    <p>Frequencies: In MHz. Up to five digits after the comma.</p>
+		    <p>Title: Up to 12 characters</p>
+		    <p>New line of code: CR + LF (in Windows)</p>
+		    <p>Example:</p>
+		    351.2,DCR-01ch<br />
+		    351.20625,DCR-02ch<br />
+		    351.2125,DCR-03ch<br />
+		    <p>Remember that you can’t create more channels than there are available in the memory bank you selected for this task.</p>
+	    </div>
+	    <br />
+	    <p>D: Click [create] and the memory bank you selected will be populated accordingly. Remember that you can’t create more channels than there are available in the memory bank you selected for this task.</p>
+	    <hr align="left" width="35%" style="border:1px dashed #000000" />
+
+    </div>
+    <h4>[MoveUp] &amp; [MoveDown]<br />
+	    Move the contents of a selected memory channel, up or down the list.</h4>
+	<ol>
+		<li>Select the memory channel number (No) you would like to move.</li>
+		<li>Click [MoveUp] to move it one step up.<br />
+		Click [MoveDown] to move it one step down.</li>
+	</ol>
+	<h4>[Sort]<br />
+		Sort memory channels, by frequency or receive mode </h4>
+	<ol>
+		<li>Click sort [Sort].</li>
+		<li>For each column to sort, [Frequency] and [Mode], select [ASC] (for ascending) or [DESC] (for descending).</li>
+		<li>Click [Sort] to sort the data accordingly.</li>
+	</ol>
+    <img src="help-img-e/c6_40.png" alt="(6)">
+	<h4 class="h4ind">[Search bar]<br />
+		Narrow down the data display by frequency, title or mode. </h4>
+	<ol>
+		<li>1.	Enter the frequency digits, title or mode characters and the displayed data will be filtered dynamically as you type.</li>
+	</ol>
+	<img src="help-img/searchwindow.png" alt="search window"><br /><br /><br /><br />
+    <img src="help-img-e/c7_40.png" alt="(7)">
+	<h4 class="h4ind">[Columns...]<br />
+		Chose which of the columns (No, Frequency, Title, Mode, Edit) should be displayed or hidden. </h4>
+	<ol>
+		<li>Click [Columns...]</li>
+		<li>Check the columns you want to display. To close this window section, click anywhere else on the window.</li>
+	</ol>
+	<img src="help-img/column_popup.png" alt="columns popup No Frequency Title Mode Edit">
+	<br /><hr />
+    <img src="help-img-e/c8_40.png" alt="(8)">
+    <h4 class="h4ind">[Edit]<br />
+	    Display and edit the content of the corresponding memory channel</h4>
+	<ul>
+		<li>BANK-CH (bank and channel number)</li>
+		<li>FREQ (Frequency in MHz)</li>
+		<li>STEP SETTING (Frequency step and step-adjust)</li>
+		<li>MODE (Receive mode)</li>
+		<li>IFBW (IF bandwidth)</li>
+		<li>PASS (Set as a pass frequency)</li>
+		<li>T:TITLE (Title)</li>
+		<li>PROTECT (To protect against accidental erasing)</li>
+		<li>SQL N/L (Manually set squelch type to noise squelch, level squelch, or auto)</li>
+		<li>OFFSET F. (Offset frequency in MHz)</li>
+		<li>DIGI.DISP (Display information about the digital signal received, if supported)</li>
+	</ul>
+	<p class="bule">Changes to this page must be saved by clicking the [OK] button at the top right of the window.</p>
+	<img src="help-img/checitdstr.png" width="80%" alt="">
+	<br /><hr />
+    <div data-role="footer">
+      <h1 class="ui-title">&copy;2018 AOR, LTD.</h1>
+      <p class="version">Ver.1.1.3(20180419)</p>
+    </div>
+    </div>
+    </div>
+
+<script type="text/javascript" charset="utf-8">
+var browserLanguage = function() {
+    var ua = window.navigator.userAgent.toLowerCase();
+    try {
+        // chrome
+        if( ua.indexOf( 'chrome' ) != -1 ){
+            return ( navigator.languages[0] || navigator.browserLanguage || navigator.language || navigator.userLanguage).substr(0,2);
+        }
+        // others
+        else{
+            return ( navigator.browserLanguage || navigator.language || navigator.userLanguage).substr(0,2);
+        }
+    }
+    catch( e ) {
+        return undefined;
+    }
+}
+	blang = 'en';
+	if (browserLanguage() == 'ja'){
+		blang = 'ja';
+	}
+	document.getElementById("help-j").className = blang ;
+	document.getElementById("help-e").className = blang ;
+
+$(function() {
+  $('.js-close-window').on('click', function() {
+    window.close();
+    return false;
+  });
+});
+	</script>
+  </body>
+</html>

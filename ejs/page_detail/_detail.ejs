@@ -1,0 +1,524 @@
+<div data-role="page" id="page-detail">
+  <div data-role="header" data-position="fixed" data-tap-toggle="false">
+    <a href="" data-rel="back">Back</a> 
+    <h1>AR DATA EDITOR</h1>
+    <a href="#" class="ui-btn ui-btn-a ui-btn-right" id="channel-confirm">OK</a>
+  </div>
+  <div role="main" class="ui-content">
+    <div id="detail-error"></div>
+    <label id="d-bank-channel-l">BANK-CH</label>
+    <p id="d-memory-bank"></p>
+    <div id="f-recive-frequency">
+      <label for="">FREQ</label>
+      <input type="text" name="" id="d-receive-frequency"></input>
+      <p id="e-receive-frequency"></p>
+      <p>Input range: 0000.10000 - 1300.00000</p>
+    </div>
+    <label>STEP SETTING</label>
+    <div data-role="collapsible" data-iconpos="right">
+      <h3>STEP/STEP ADJ</h3>
+      <div>
+        <label for="">STEP</label>
+        <select id="d-frequency-step">
+          <option value="000.01">10Hz</option>
+          <option value="000.05">50Hz</option>
+          <option value="000.10">0.1kHz</option>
+          <option value="000.50">0.5kHz</option>
+          <option value="001.00">1kHz</option>
+          <option value="002.00">2kHz</option>
+          <option value="005.00">5kHz</option>
+          <option value="006.25">6.25kHz</option>
+          <option value="007.50">7.5kHz</option>
+          <option value="008.33">8.33kHz</option>
+          <option value="009.00">9kHz</option>
+          <option value="010.00">10kHz</option>
+          <option value="012.50">12.5kHz</option>
+          <option value="015.00">15kHz</option>
+          <option value="020.00">20kHz</option>
+          <option value="025.00">25kHz</option>
+          <option value="030.00">30kHz</option>
+          <option value="050.00">50kHz</option>
+          <option value="100.00">100kHz</option>
+          <option value="500.00">500kHz</option>
+        </select>
+      </div>
+      <div>
+        <label for="">STEP ADJ</label>
+        <select id="d-step-adjust-frequency">
+        </select>
+      </div>
+    </div>
+    <label for="">MODE</label>
+    <select id="d-mode">
+    </select>
+    <div id="f-if-bandwidth">
+      <label for="">IFBW</label>
+      <select id="d-if-bandwidth">
+      </select>
+    </div>
+
+    <label for="d-pass-channel">PASS</label>
+    <select id="d-pass-channel" data-role="flipswitch">
+      <option value="0">OFF</option>
+      <option value="1">ON</option>
+    </select>
+
+    <label for="">T:(TITLE)</label>
+    <input type="text" name="" id="d-memory-tag" value="" title="title"></input>
+    <div id="e-memory-tag"></div>
+    <div class="note">
+      <p>Up to 12 characters.The characters that can be used are:</p>
+      <p class="code" id="memory-tag-info"></p>
+    </div>
+    <label for="d-write-protect">PROTECT</label>
+    <select id="d-write-protect" data-role="flipswitch">
+      <option value="0">OFF</option>
+      <option value="1">ON</option>
+    </select>
+
+    <label>SQL N/L</label>
+    <fieldset data-role="controlgroup" data-type="horizontal">
+      <input type="radio" name="sql" id="d-select-squelch1" value="0"><label for="d-select-squelch1">LevelSQ</label>
+      <input type="radio" name="sql" id="d-select-squelch2" value="1"><label for="d-select-squelch2">NoiseSQ</label>
+      <input type="radio" name="sql" id="d-select-squelch3" value="2"><label for="d-select-squelch3">Auto</label>
+    </fieldset>
+
+    <div id="f-squelch-type">
+      <label>SQL TYPE</label>
+      <fieldset data-role="controlgroup" data-type="horizontal" id="d-squelch-type">
+        <input type="radio" name="sqltype" id="d-squelch-type1" value="0"><label for="d-squelch-type1">OFF</label>
+        <input type="radio" name="sqltype" id="d-squelch-type2" value="1"><label for="d-squelch-type2">CTC</label>
+        <input type="radio" name="sqltype" id="d-squelch-type3" value="2"><label for="d-squelch-type3">DCS</label>
+        <input type="radio" name="sqltype" id="d-squelch-type4" value="3"><label for="d-squelch-type4">V.SCR</label>
+        <input type="radio" name="sqltype" id="d-squelch-type5" value="4"><label for="d-squelch-type5">REV.T</label>
+      </fieldset>
+    </div>
+
+    <div id="f-tone-squelch-frequency">
+      <label for="">CTCSS</label>
+      <select id="d-tone-squelch-frequency">
+        <option value="00">OFF</option>
+        <option value="01">SRCH</option>
+        <option value="02">60.0</option>
+        <option value="03">67.0</option>
+        <option value="04">69.3</option>
+        <option value="05">71.9</option>
+        <option value="06">74.4</option>
+        <option value="07">77.0</option>
+        <option value="08">79.7</option>
+        <option value="09">82.5</option>
+        <option value="10">85.4</option>
+        <option value="11">88.5</option>
+        <option value="12">91.5</option>
+        <option value="13">94.8</option>
+        <option value="14">97.4</option>
+        <option value="15">100.0</option>
+        <option value="16">103.5</option>
+        <option value="17">107.2</option>
+        <option value="18">110.9</option>
+        <option value="19">114.8</option>
+        <option value="20">118.8</option>
+        <option value="21">120.0</option>
+        <option value="22">123.0</option>
+        <option value="23">127.3</option>
+        <option value="24">131.8</option>
+        <option value="25">136.5</option>
+        <option value="26">141.3</option>
+        <option value="27">146.2</option>
+        <option value="28">151.4</option>
+        <option value="29">156.7</option>
+        <option value="30">159.8</option>
+        <option value="31">162.2</option>
+        <option value="32">165.5</option>
+        <option value="33">167.9</option>
+        <option value="34">171.3</option>
+        <option value="35">173.8</option>
+        <option value="36">177.3</option>
+        <option value="37">179.9</option>
+        <option value="38">183.5</option>
+        <option value="39">186.2</option>
+        <option value="40">189.9</option>
+        <option value="41">192.8</option>
+        <option value="42">196.6</option>
+        <option value="43">199.5</option>
+        <option value="44">203.5</option>
+        <option value="45">206.5</option>
+        <option value="46">210.7</option>
+        <option value="47">218.1</option>
+        <option value="48">225.7</option>
+        <option value="49">229.1</option>
+        <option value="50">233.6</option>
+        <option value="51">241.8</option>
+        <option value="52">250.3</option>
+        <option value="53">254.1</option>
+      </select>
+    </div>
+
+    <div id="f-dcs-code">
+      <label for="d-dcs-code">DCS CODE</label>
+      <select id="d-dcs-code">
+        <option value="00">OFF</option>
+        <option value="01">SRCH</option>
+        <option value="02">17</option>
+        <option value="03">23</option>
+        <option value="04">25</option>
+        <option value="05">26</option>
+        <option value="06">31</option>
+        <option value="07">32</option>
+        <option value="08">36</option>
+        <option value="09">43</option>
+        <option value="10">47</option>
+        <option value="11">50</option>
+        <option value="12">51</option>
+        <option value="13">53</option>
+        <option value="14">54</option>
+        <option value="15">65</option>
+        <option value="16">71</option>
+        <option value="17">72</option>
+        <option value="18">73</option>
+        <option value="19">74</option>
+        <option value="20">114</option>
+        <option value="21">115</option>
+        <option value="22">116</option>
+        <option value="23">122</option>
+        <option value="24">125</option>
+        <option value="25">131</option>
+        <option value="26">132</option>
+        <option value="27">134</option>
+        <option value="28">143</option>
+        <option value="29">145</option>
+        <option value="30">152</option>
+        <option value="31">155</option>
+        <option value="32">156</option>
+        <option value="33">162</option>
+        <option value="34">165</option>
+        <option value="35">172</option>
+        <option value="36">174</option>
+        <option value="37">205</option>
+        <option value="38">212</option>
+        <option value="39">223</option>
+        <option value="40">225</option>
+        <option value="41">226</option>
+        <option value="42">243</option>
+        <option value="43">244</option>
+        <option value="44">245</option>
+        <option value="45">246</option>
+        <option value="46">251</option>
+        <option value="47">252</option>
+        <option value="48">255</option>
+        <option value="49">261</option>
+        <option value="50">263</option>
+        <option value="51">265</option>
+        <option value="52">266</option>
+        <option value="53">271</option>
+        <option value="54">274</option>
+        <option value="55">306</option>
+        <option value="56">311</option>
+        <option value="57">315</option>
+        <option value="58">325</option>
+        <option value="59">331</option>
+        <option value="60">332</option>
+        <option value="61">343</option>
+        <option value="62">346</option>
+        <option value="63">351</option>
+        <option value="64">356</option>
+        <option value="65">364</option>
+        <option value="66">365</option>
+        <option value="67">371</option>
+        <option value="68">411</option>
+        <option value="69">412</option>
+        <option value="70">413</option>
+        <option value="71">423</option>
+        <option value="72">431</option>
+        <option value="73">432</option>
+        <option value="74">445</option>
+        <option value="75">446</option>
+        <option value="76">452</option>
+        <option value="77">454</option>
+        <option value="78">455</option>
+        <option value="79">462</option>
+        <option value="80">464</option>
+        <option value="81">465</option>
+        <option value="82">466</option>
+        <option value="83">503</option>
+        <option value="84">506</option>
+        <option value="85">516</option>
+        <option value="86">523</option>
+        <option value="87">526</option>
+        <option value="88">532</option>
+        <option value="89">546</option>
+        <option value="90">565</option>
+        <option value="91">606</option>
+        <option value="92">612</option>
+        <option value="93">624</option>
+        <option value="94">627</option>
+        <option value="95">631</option>
+        <option value="96">632</option>
+        <option value="97">654</option>
+        <option value="98">662</option>
+        <option value="99">664</option>
+        <option value="100">703</option>
+        <option value="101">712</option>
+        <option value="102">723</option>
+        <option value="103">731</option>
+        <option value="104">732</option>
+        <option value="105">734</option>
+        <option value="106">743</option>
+        <option value="107">754</option>
+      </select>
+    </div>
+
+    <div id="f-agc">
+      <label>AGC</label>
+      <fieldset data-role="controlgroup" data-type="horizontal">
+        <input type="radio" name="agc" id="d-agc1" value="0"><label for="d-agc1">Fast</label>
+        <input type="radio" name="agc" id="d-agc2" value="1"><label for="d-agc2">Mid</label>
+        <input type="radio" name="agc" id="d-agc3" value="2"><label for="d-agc3">Slow</label>
+        <input type="radio" name="agc" id="d-agc4" value="3"><label for="d-agc4">RfGain</label>
+      </fieldset>
+    </div>
+    
+    <label for="d-offset-index-sign">OFFSET F.</label>
+    <div data-role="controlgroup" data-type="horizontal">
+      <select id="d-offset-index-sign">
+        <option value="plus">+</option>
+        <option value="minus">-</option>
+      </select>
+      <select id="d-offset-index">
+        <option value="00">00</option>
+        <option value="01">01</option>
+        <option value="02">02</option>
+        <option value="03">03</option>
+        <option value="04">04</option>
+        <option value="05">05</option>
+        <option value="06">06</option>
+        <option value="07">07</option>
+        <option value="08">08</option>
+        <option value="09">09</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option>
+        <option value="16">16</option>
+        <option value="17">17</option>
+        <option value="18">18</option>
+        <option value="19">19</option>
+        <option value="20">20</option>
+        <option value="21">21</option>
+        <option value="22">22</option>
+        <option value="23">23</option>
+        <option value="24">24</option>
+        <option value="25">25</option>
+        <option value="26">26</option>
+        <option value="27">27</option>
+        <option value="28">28</option>
+        <option value="29">29</option>
+        <option value="30">30</option>
+        <option value="31">31</option>
+        <option value="32">32</option>
+        <option value="33">33</option>
+        <option value="34">34</option>
+        <option value="35">35</option>
+        <option value="36">36</option>
+        <option value="37">37</option>
+        <option value="38">38</option>
+        <option value="39">39</option>
+      </select>
+      <p id="d-offset-index-value"></p>
+    </div>
+    
+    <div id="f-voice-descrambler">
+      <label for="d-voice-descrambler">V.SCR</label>
+      <select id="d-voice-descrambler" data-role="flipswitch">
+        <option value="00">OFF</option>
+        <option value="01">ON</option>
+      </select>
+    </div>
+
+    <div id="f-voice-descrambler-frequency">
+      <label for="d-voice-descrambler-frequency">V.SCR F.</label>
+      <input type="number" name="" id="d-voice-descrambler-frequency" value="" min="2000" max="7000" step="10"></input>
+      <div id="e-voice-descrambler-frequency"></div>
+      <div class="note">
+        <p>Input range: 2000 - 7000 / Step: 10</p>
+      </div>
+    </div>
+
+    <div id="f-dcr-encryption-code">
+      <label for="d-dcr-encryption-code">DCR ENC C.</label>
+      <input type="number" name="" id="d-dcr-encryption-code" value="" min="0" max="32767"></input>
+      <p id="e-dcr-encryption-code"></p>
+      <div class="note">
+        <p>Input range: 0 - 32767
+      </div>
+    </div>
+
+    <div id="f-dmr-slot-selection">
+      <label for="">DMR SLOT</label>
+      <fieldset data-role="controlgroup" data-type="vertical">
+        <input type="radio" name="dmrslot" id="d-dmr-slot-selection1" value="0">
+        <label for="d-dmr-slot-selection1">1+2 (1 has priority)</label>
+        <input type="radio" name="dmrslot" id="d-dmr-slot-selection2" value="1">
+        <label for="d-dmr-slot-selection2">2+1 (2 has priority)</label>
+        <input type="radio" name="dmrslot" id="d-dmr-slot-selection3" value="2">
+        <label for="d-dmr-slot-selection3">1</label>
+        <input type="radio" name="dmrslot" id="d-dmr-slot-selection4" value="3">
+        <label for="d-dmr-slot-selection4">2</label>
+      </fieldset>
+    </div>
+
+    <div id="f-dmr-mute-by-color-code">
+      <label for="d-dmr-mute-by-color-code">DMR COLOR</label>
+      <select id="d-dmr-mute-by-color-code" data-role="flipswitch">
+        <option value="0">OFF</option>
+        <option value="1">ON</option>
+      </select>
+    </div>
+
+    <div id="f-dmr-color-code">
+      <label for="d-dmr-color-code">DMR COLOR C.</label>
+      <select id="d-dmr-color-code">
+        <option value="00">00</option>
+        <option value="01">01</option>
+        <option value="02">02</option>
+        <option value="03">03</option>
+        <option value="04">04</option>
+        <option value="05">05</option>
+        <option value="06">06</option>
+        <option value="07">07</option>
+        <option value="08">08</option>
+        <option value="09">09</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option>
+        <option value="16">16</option>
+      </select>
+    </div>
+
+    <div id="f-apco-p25-mute-by-nac-code">
+      <label for="d-apco-p25-mute-by-nac-code">P25 NAC</label>
+      <select id="d-apco-p25-mute-by-nac-code" data-role="flipswitch">
+        <option value="0">OFF</option>
+        <option value="1">ON</option>
+      </select>
+    </div>
+
+    <div id="f-apco-p25-nac-code">
+      <label for="d-apco-p25-nac-code">P25 NAC C.</label>
+      <div data-role="controlgroup" data-type="horizontal">
+        <button>0x</button><input type="text" id="d-apco-p25-nac-code" data-wrapper-class="controlgroup-textinput ui-btn">
+      </div>
+      <div class="note">
+        <p>Input range: 000 - FFF</p>
+      </div>
+    </div>
+
+    <div id="f-nxdn-mute-by-ran-code">
+      <label for="d-nxdn-mute-by-ran-code">NXDN RAN</label>
+      <select id="d-nxdn-mute-by-ran-code" data-role="flipswitch">
+        <option value="0">OFF</option>
+        <option value="1">ON</option>
+      </select>
+    </div>
+
+    <div id="f-nxdn-ran-code">
+      <label for="d-nxdn-ran-code">NXDN RAN C.</label>
+      <select id="d-nxdn-ran-code">
+        <option value="00">00</option>
+        <option value="01">01</option>
+        <option value="02">02</option>
+        <option value="03">03</option>
+        <option value="04">04</option>
+        <option value="05">05</option>
+        <option value="06">06</option>
+        <option value="07">07</option>
+        <option value="08">08</option>
+        <option value="09">09</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option>
+        <option value="16">16</option>
+        <option value="17">17</option>
+        <option value="18">18</option>
+        <option value="19">19</option>
+        <option value="20">20</option>
+        <option value="21">21</option>
+        <option value="22">22</option>
+        <option value="23">23</option>
+        <option value="24">24</option>
+        <option value="25">25</option>
+        <option value="26">26</option>
+        <option value="27">27</option>
+        <option value="28">28</option>
+        <option value="29">29</option>
+        <option value="30">30</option>
+        <option value="31">31</option>
+        <option value="32">32</option>
+        <option value="33">33</option>
+        <option value="34">34</option>
+        <option value="35">35</option>
+        <option value="36">36</option>
+        <option value="37">37</option>
+        <option value="38">38</option>
+        <option value="39">39</option>
+        <option value="40">40</option>
+        <option value="41">41</option>
+        <option value="42">42</option>
+        <option value="43">43</option>
+        <option value="44">44</option>
+        <option value="45">45</option>
+        <option value="46">46</option>
+        <option value="47">47</option>
+        <option value="48">48</option>
+        <option value="49">49</option>
+        <option value="50">50</option>
+        <option value="51">51</option>
+        <option value="52">52</option>
+        <option value="53">53</option>
+        <option value="54">54</option>
+        <option value="55">55</option>
+        <option value="56">56</option>
+        <option value="57">57</option>
+        <option value="58">58</option>
+        <option value="59">59</option>
+        <option value="60">60</option>
+        <option value="61">61</option>
+        <option value="62">62</option>
+        <option value="63">63</option>
+        <option value="64">64</option>
+      </select>
+    </div>
+
+    <div id="f-digital-data-output">
+      <label for="d-digital-data-output">DIGI.DISP</label>
+      <select id="d-digital-data-output" data-role="flipswitch">
+        <option value="0">OFF</option>
+        <option value="1">ON</option>
+      </select>
+    </div>
+
+    <div id="f-voice-squelch">
+      <label>Voice SQ</label>
+      <p id="d-voice-squelch"></p>
+    </div>
+
+    <div id="f-auto-notch">
+      <label>Notch</label>
+      <p id="d-auto-notch"></p>
+    </div>
+
+    <div id="f-noise-reduction">
+      <label>Denois</label>
+      <p id="d-noise-reduction"></p>
+    </div>
+  </div>
+  <%- include('../share/_footer'); %>
+</div>

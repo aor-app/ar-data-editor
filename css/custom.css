@@ -1,0 +1,151 @@
+.controlgroup-textinput{
+    padding-top:.22em;
+    padding-bottom:.22em;
+}
+.note{
+    margin-bottom: 1em;
+}
+.code{
+    font-size: small;
+}
+.error{
+    color: #c95454;
+}
+#detail-error.error {
+    background-color: #f7b9b9;
+    color: #752e2e;
+    display: block;
+    padding: 1em;
+    margin: 0.5em;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+}
+#detail-error {
+    display: none;
+}
+#p-sort table {
+    width: 100%;
+}
+#p-sort td {
+    padding: 0.2em;
+    text-align: center;
+}
+#page-detail label {
+    font-weight: bold;
+}
+#d-offset-index-value {
+    margin-left: 1em;
+    display: inline;
+    line-height: 3em;
+    font-weight: bold;
+}
+/* Show priority 1 at 80px (5em x 16px) */
+@media screen and (min-width: 7em) { /* No(5) + space(2) */
+   .memorychannel-list th.ui-table-priority-1,
+   .memorychannel-list td.ui-table-priority-1 {
+     display: table-cell;
+   }
+}
+/* Show priority 2 at 256px (16em x 16px) */
+@media screen and (min-width: 18em) { /* frequency(10) + space(1) */
+   .memorychannel-list  th.ui-table-priority-2,
+   .memorychannel-list td.ui-table-priority-2 {
+     display: table-cell;
+   }
+}
+/* Show priority 3 at 464px (27em x 16px) */
+@media screen and (min-width: 31em) {  /* title(12) + space(1) */
+   .memorychannel-list  th.ui-table-priority-3,
+   .memorychannel-list td.ui-table-priority-3 {
+     display: table-cell;
+   }
+}
+/* Show priority 4 at 640px (40em x 16px) */
+@media screen and (min-width: 42em) { /* mode(10) + space(1) */
+   .memorychannel-list  th.ui-table-priority-4,
+   .memorychannel-list td.ui-table-priority-4 {
+     display: table-cell;
+   }
+}
+/* Show priority 5 at 912px (57em x 16px) */
+@media screen and (min-width: 46em) { /* Editbutton(3) + space(1) */
+   .memorychannel-list  th.ui-table-priority-5,
+   .memorychannel-list td.ui-table-priority-5 {
+     display: table-cell;
+   }
+}
+
+/* Manually hidden */
+.memorychannel-list th.ui-table-cell-hidden,
+.memorychannel-list td.ui-table-cell-hidden {
+  display: none;
+}
+
+/* Manually shown */
+.memorychannel-list th.ui-table-cell-visible,
+.memorychannel-list td.ui-table-cell-visible {
+   display: table-cell;
+}
+/* Show priority 1 at 80px (5em x 16px) */
+@media screen and (min-width: 7em) { /* No(5) + space(2) */
+   .template-list th.ui-table-priority-1,
+   .template-list td.ui-table-priority-1 {
+     display: table-cell;
+   }
+}
+/* Show priority 2 at 288px (18em x 16px) */
+@media screen and (min-width: 20em) { /* title(12) + space(1) */
+   .template-list  th.ui-table-priority-2,
+   .template-list td.ui-table-priority-2 {
+     display: table-cell;
+   }
+}
+/* Show priority 3 at 464px (29em x 16px) */
+@media screen and (min-width: 31em) { /* mode(10) + space(1) */
+   .template-list  th.ui-table-priority-3,
+   .template-list td.ui-table-priority-3 {
+     display: table-cell;
+   }
+}
+/* Show priority 4 at 688px (43em x 16px) */
+@media screen and (min-width: 35em) { /* Editbutton(3) + space(1) */
+   .template-list  th.ui-table-priority-4,
+   .template-list td.ui-table-priority-4 {
+     display: table-cell;
+   }
+}
+
+.list-no-text {
+    position: absolute;
+    left: .5em;
+    top: 50%;
+    margin: -11px 0 0 30px;
+}
+.memorychannel-list td{
+    height: 1.5em;
+}
+.template-list td{
+    height: 1.5em;
+}
+p.version{
+    font-size: small;
+    font-weight: normal;
+    text-align: center;
+    margin: 0.5em 0;
+    padding: 0.5em 0;
+}
+.ui-loader-background {
+    width:100%;
+    height:100%;
+    top:0;
+    margin: 0;
+    background: rgba(0, 0, 0, 0.3);
+    display:none;
+    position: fixed;
+    z-index:100;
+}
+
+.ui-loading .ui-loader-background {
+    display:block;
+}

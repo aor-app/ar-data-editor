@@ -1,0 +1,30 @@
+.code_help {
+	font-family: source-code-pro, Consolas, monospace;
+	font-size: normal;
+	font-style: normal;
+	font-weight: normal;
+}
+.bule {
+	color: #434381;
+}
+h4.h4ind {
+	margin-top: -36px;
+	margin-left: 48px;
+}
+div.divind {
+	margin-left: 40px;
+}
+div.dlbox {
+	display: block;
+	margin-left: 20px;
+	padding: 10px;
+	border: 1px dashed #434381;
+}
+body div div#help-e,
+body div div#help-j {
+	display: none;
+}
+body div div#help-e.en,
+body div div#help-j.ja {
+	display: block;
+}
