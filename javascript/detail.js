@@ -293,8 +293,6 @@ function showOffsetIndexValue( offsetIndex ){
     }
 }
 function selectFrequencyStep( frequencyStepValue ){
-    console.log('-----');
-    console.log(frequencyStepValue);
     $('#d-frequency-step').val(frequencyStepValue).selectmenu('refresh');
     $('#d-step-adjust-frequency').empty();
     let frequencyStepkey = Object.keys(FREQUENCY_STEP).filter(function( key ){ return FREQUENCY_STEP[key].value == frequencyStepValue });

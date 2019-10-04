@@ -1,4 +1,4 @@
-const VERSION = '1.1.1';
+const VERSION = '1.1.5';
 const MEMORY_BANK_NUM = 40;
 const MEMORY_CHANNEL_NUM = 50;
 const SD_BACKUP = 'SD-BACKUP';

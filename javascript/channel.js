@@ -233,10 +233,13 @@ class Channel {
         }
         return data;
     }
-    getData(model){
+    getMCData(model){
         let data = this.getModelConvertedData(model); //copy
         data[MC.MEMORY_TAG] = (data[MC.MEMORY_TAG] + '            ').slice(0, 12);
-        return data;
+        let mcData = { MC1: data.slice(0, 15),
+                       MC2: data.slice(15, 35),
+                       MC3: data.slice(35, 45) };
+        return mcData;
     }
     setDefaultData(array){
         array[MC.MC1_ROWNAME] = 'MC1';
