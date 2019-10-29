@@ -1,3 +1,4 @@
+/*! channel.js | v1.1.6 2019/10 AOR, LTD. | https://github.com/aor-app/ar-data-editor */
 class Channel {
     constructor(data){
         if( data ){
@@ -97,6 +98,9 @@ class Channel {
     get nxdnMuteByRANCode(){ return this.data[MC.NXDN_MUTE_BY_RAN_CODE]; };
     set nxdnMuteByRANCode( val ){ this.data[MC.NXDN_MUTE_BY_RAN_CODE] = val; };
 
+    get ttcSlotNumber(){ return this.data[MC.T_TC_SLOT_NUMBER]; };
+    set ttcSlotNumber( val ){ this.data[MC.T_TC_SLOT_NUMBER] = val; };
+
     get voiceSquelch(){ return this.data[MC.VOICE_SQUELCH]; };
     get autoNotch(){ return this.data[MC.AUTO_NOTCH]; };
     get noiseReduction(){ return this.data[MC.NOISE_REDIRECTION]; };
@@ -130,6 +134,7 @@ class Channel {
                      '005': 'dPMR',
                      '006': 'DMR',
                      '007': 'T-DM',
+                     '008': 'T-TC',
                      '128': 'AUTO'};
         return names[this.digitalDecodeMode];
     }
@@ -280,7 +285,7 @@ class Channel {
         array[MC.MC3_ROWNAME] = 'MC3';
         array[MC.DMR_COLOR_CODE] = '00';
         array[MC.DMR_MUTE_BY_COLOR_CODE] = '0';
-        array[MC.DUMMY6] = '0';
+        array[MC.T_TC_SLOT_NUMBER] = '0';
         array[MC.APCO_P_25_NAC_CODE] = '0x000';
         array[MC.APCO_P_25_MUTE_BY_NAC_CODE] = '0';
         array[MC.DUMMY7] = '0';

@@ -1,4 +1,4 @@
-# AR DATA EDITOR v1.1.5  
+# AR DATA EDITOR v1.1.6  
 ## For AOR AR-DV1 and AR-DV10 receivers  
 --------
 This is a convenient browser-based memory data editor for the AR-DV1 and AR-DV10 receivers' memory data files.
@@ -8,7 +8,7 @@ This is a convenient browser-based memory data editor for the AR-DV1 and AR-DV10
 ----------
 
 - **A browser.** Most common browsers should work, except Internet Explorer.  
-- **An SD card reader.** The data is read-off and written to the SD card to which the receiver’s memory data has been copied to. Connecting the receiver to your PC is not required!  
+- **An SD card reader.** The data is read-off and written to the SD card to which the receiver's memory data has been copied to. Connecting the receiver to your PC is not required!  
   
   
 ## What does AR DATA EDITOR allow me to do?
@@ -22,6 +22,13 @@ This is a convenient browser-based memory data editor for the AR-DV1 and AR-DV10
 
 ## RELEASE NOTES  
 ----------
+
+### v1.1.6  
+The following feature has been added:  
+- T-TC mode and its slot number selection.  
+
+The following bugs have been fixed:  
+- Fill the leading zeros of D-CR ENC CODE.
 
 ### v1.1.5  
 The following feature has been added:  

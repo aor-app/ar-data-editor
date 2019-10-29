@@ -1,3 +1,4 @@
+/*! memory_data.js | v1.1.6 2019/10 AOR, LTD. | https://github.com/aor-app/ar-data-editor */
 class MemoryData {
     constructor(fileType, model, blockType, version, registeredAt = new Date, selectedMemoryBankNo, selectedMemoryChannelNo, banks){
         this.model = model;

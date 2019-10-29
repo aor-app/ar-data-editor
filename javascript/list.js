@@ -1,3 +1,4 @@
+/*! list.js | v1.1.6 2019/10 AOR, LTD. | https://github.com/aor-app/ar-data-editor */
 let currentMemoryData = null;
 let current_channel = null;
 let currentMemoryBankNo = null;
