@@ -1,3 +1,4 @@
+/*! memory_data.js | v1.1.6 2019/10 AOR, LTD. | https://github.com/aor-app/ar-data-editor */
 class MemoryData {
     constructor(fileType, model, blockType, version, registeredAt = new Date, selectedMemoryBankNo, selectedMemoryChannelNo, banks){
         this.model = model;
@@ -215,12 +216,9 @@ class MemoryData {
         let csvArray = new Array;
         csvArray.push(this.createHdrArray(model));
         csvArray.push(this.createMC0Array());
-        for( let bank_i = 0; bank_i < MEMORY_BANK_NUM; bank_i++){
-            for( let channel_i = 0; channel_i < MEMORY_CHANNEL_NUM; channel_i++){
-                let channelData = this._banks[bank_i][channel_i].getData(model);
-                let mcData = { MC1: channelData.slice(0, 15),
-                               MC2: channelData.slice(15, 35),
-                               MC3: channelData.slice(35, 45) };
+        for( let bank_i = 0; bank_i < this._banks.length; bank_i++){
+            for( let channel_i = 0; channel_i < this._banks[bank_i].length; channel_i++){
+                let mcData = this._banks[bank_i][channel_i].getMCData(model);
                 mcData.MC1[1] = ('00' + bank_i).slice(-2);
                 mcData.MC1[2] = ('00' + channel_i).slice(-2);
                 csvArray.push(mcData.MC1);
@@ -231,32 +229,5 @@ class MemoryData {
         // data
         csvArray.push(this.createMC9Array());
         return csvArray;
-    }
-    getData(model){
-        if ( model == this.model){
-            model = null;
-        }
-        let banks = new Array;
-        for( let bank_i = 0; bank_i < MEMORY_BANK_NUM; bank_i++){
-            let bank = new Array;
-            for( let channel_i = 0; channel_i < MEMORY_CHANNEL_NUM; channel_i++){
-                let channelData = this._banks[bank_i][channel_i].getData(model);
-                bank.push(channelData);
-            }
-            banks.push(bank);
-        }
-        return banks;
-    }
-    validateMemoryDataNum(){
-        if( currentMemoryData._banks.length > MEMORY_BANK_NUM ){
-            return {code: -1, message: 'MEMRY BANK NUM OVER'};
-        }else{
-            for(let bankNo = 0; bankNo < MEMORY_BANK_NUM; bankNo++){
-                if( currentMemoryData._banks[bankNo].length > MEMORY_CHANNEL_NUM){
-                    return {code: -1, message: 'MEMORY CHANNEL NUM OVER'};
-                }
-            }
-        }
-        return {code: 0};
     }
 }

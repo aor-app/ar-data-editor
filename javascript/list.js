@@ -1,4 +1,4 @@
-'use strict';
+/*! list.js | v1.1.6 2019/10 AOR, LTD. | https://github.com/aor-app/ar-data-editor */
 let currentMemoryData = null;
 let current_channel = null;
 let currentMemoryBankNo = null;
@@ -9,12 +9,14 @@ let insertPoint = null;
 let templateData = null;
 let frequencyList = null;
 let multipleDataCreateError = null;
-let functionStore = new Array;
 function setFileInfo(){
     $('#file-type').text(`${currentMemoryData.fileType}, ${currentMemoryData.blockType}`);
     $('#file-model').text(currentMemoryData.model);
     $('#file-version').text(currentMemoryData.modelVersion);
     $('#file-registered-at').text(currentMemoryData.registeredAt);
+}
+function paddingZero(value){
+    return  ('00' + value ).slice(-2);
 }
 function setSelectMemoryBank(){
     if ( currentMemoryData.fileType == SD_BACKUP ){
@@ -218,10 +220,6 @@ function showErrorPopup(message){
     $('#fn-error-message').text(message);
     $('#fn-error').popup('open');
 }
-function showCompletePopup(message){
-    $('#fn-complete-message').text(message);
-    $('#fn-complete').popup('open');
-}
 function readFile(fileElement){
     return new Promise(
         function( resolv, reject ){
@@ -239,24 +237,29 @@ function readFile(fileElement){
                     complete: function(results){
                         if (results && results.errors){
                             if (results.errors){
-//                                errorCount = results.errors.length;
-//                                firstError = results.errors[0];
+                                errorCount = results.errors.length;
+                                firstError = results.errors[0];
                             }
                             if (results.data && results.data.length > 0){
-//                                rowCount = results.data.length;
+                                rowCount = results.data.length;
                             }
+//                            console.log(results.data);
                             resolv(results.data);
                         }
                     },
                     error: function(error, file){
+//                        console.log('ERROR:', err, file);
                     },
                     download: false
                 },
                 before: function(file, inputElem){
+//                    console.log('Parsing file...', file);
                 },
                 error: function(){
+//                    console.log('error has occured.');
                 },
                 complete: function(res){
+//                    console.log('Done with all files');
                 }
             });
         });
@@ -437,471 +440,423 @@ function isValidSaveFilename(){
         return true;
     }
 }
-function showWarningPopup(message, okFunction){
-    $('#fn-warning-message').html(message);
-    $('#fn-warning-ok').on('click', okFunction);
-    $('#fn-warning').popup('open');
-}
-function hideWarningPopup(){
-    $('#fn-warning-message').html('');
-    $('#fn-warning-ok').off('click');
-    $('#fn-warning').popup('close');
-}
-function showSaveFilePopup(){
-    $('#p-save-file').popup('open');
-}
-function validateMemoryDataNumWithWarningPopup(afterValidFunction){
-    let validateResult =  currentMemoryData.validateMemoryDataNum();
-    if( validateResult.code === -1 ){
-        let message = 'The number of banks or the number of channels exceeds the number of possible registrations.<br />Banks and channels that exceed the number of possible registrations will be deleted.';
-        let okFunction = function(){
-            functionStore.push(afterValidFunction);
-            hideWarningPopup();
-        };
-        showWarningPopup(message, okFunction);
-    }else{
-        afterValidFunction();
-    }
-}
 /** main **/
-$(function() {
-    $(document).on('pagecreate',
-                   function(e, d){
-                       $('.version').text(`Version ${VERSION}`);
-                   });
-    $(document).on('change', 'select#select-bank',
-                   function(){
-                       setList($(this).val());
-                   });
-    $(document).on('click', '#open-file-btn',
-                   function(){
-                       $('#file-select').click();
-                   });
-    $(document).on('change', '#file-select',
-                   function(){
-                       readFile($(this)).then(
-                           function(readData){
-                               $('#file-name').text($('#file-select').prop('files')[0].name);
-                               $('#file-model').text('');
-                               $('#file-version').text('');
-                               $('#file-registered-at').text('');
-                               currentMemoryData = readDataToObject(readData);
-                               setEditMode(currentMemoryData.fileType);
-                           },
-                           function(error){
-                               showErrorPopup('An error occurred while reading the file.');
-                               return false;
-                           });
-                   });
-    $(document).on('click', '#save-file-btn',
-                   function(){
-                       $('#p-save-filename-error').text('');
-                       $('#p-save-filename').val(defaultSaveFileName());
-                       $('#model').val(currentMemoryData.model).selectmenu('refresh');
-                       validateMemoryDataNumWithWarningPopup(showSaveFilePopup);
-                   });
-    $(document).on('click', '.channel_row',
-                   function(){
-                       currentMemoryBankNo = $('#select-bank').val();
-                       currentMemoryChannelNo = Number($(this).attr('id').split('_')[1]);
-                       current_channel = currentMemoryData.getChannel(currentMemoryBankNo, currentMemoryChannelNo);
-                   });
-    $(document).on('pagebeforeshow', '#page-detail',
-                   function(){
-                       if ( current_channel ){
-                           setDetail();
-                       }else{
-                           $.mobile.changePage('#page-list');
+$(document).on('pagecreate',
+               function(e, d){
+                   $('.version').text(`Version ${VERSION}`);
+               });
+$(document).on('change', 'select#select-bank',
+               function(){
+                   setList($(this).val());
+});
+$(document).on('click', '#open-file-btn',
+               function(){
+                   $('#file-select').click();
+               });
+$(document).on('change', '#file-select',
+               function(){
+                   readFile($(this)).then(
+                       function(readData){
+                           $('#file-name').text($('#file-select').prop('files')[0].name);
+                           $('#file-model').text('');
+                           $('#file-version').text('');
+                           $('#file-registered-at').text('');
+                           currentMemoryData = readDataToObject(readData);
+                           setEditMode(currentMemoryData.fileType);
+                       },
+                       function(error){
+                           showErrorPopup('An error occurred while reading the file.');
+                           return false;
+                       });
+               });
+$(document).on('click', '#save-file-btn',
+               function(){
+                   $('#p-save-filename-error').text('');
+                   $('#p-save-filename').val(defaultSaveFileName());
+                   $('#model').val(currentMemoryData.model).selectmenu('refresh');
+                   $('#p-save-file').popup('open');
+               });
+$(document).on('click', '.channel_row',
+               function(){
+                   currentMemoryBankNo = $('#select-bank').val();
+                   currentMemoryChannelNo = Number($(this).attr('id').split('_')[1]);
+                   current_channel = currentMemoryData.getChannel(currentMemoryBankNo, currentMemoryChannelNo);
+               });
+$(document).on('pagebeforeshow', '#page-detail',
+               function(){
+                   if ( current_channel ){
+                       setDetail();
+                   }else{
+                       $.mobile.changePage('#page-list');
+                   }
+               });
+$(document).on('click', '#fn-clear-btn',
+               function(){
+                   let selected = getSelectedChannel();
+                   if ( selected.length == 0 ){
+                       showErrorPopup('Please select channels to clear.');
+                   }else{
+                       let bankNo = $('#select-bank').val();
+                       for(let i = 0; i < selected.length; i++){
+                           let channelNo = Number(selected[i].split('_')[2]);
+                           currentMemoryData.clearChannel(bankNo, channelNo);
+                           updateLine(channelNo);
+                           $(`#${selected[i]}`).prop('checked', false);
                        }
-                   });
-    $(document).on('click', '#fn-clear-btn',
-                   function(){
-                       let selected = getSelectedChannel();
-                       if ( selected.length == 0 ){
-                           showErrorPopup('Please select channels to clear.');
-                       }else{
-                           let bankNo = $('#select-bank').val();
-                           for(let i = 0; i < selected.length; i++){
-                               let channelNo = Number(selected[i].split('_')[2]);
-                               currentMemoryData.clearChannel(bankNo, channelNo);
-                               updateLine(channelNo);
-                               $(`#${selected[i]}`).prop('checked', false);
-                           }
+                   }
+               });
+$(document).on('click', '#fn-remove-btn',
+               function(){
+                   let selected = getSelectedChannel();
+                   if ( selected.length == 0 ){
+                       showErrorPopup('Please select channels to remove.');
+                   }else{
+                       let removeChannels = new Array;
+                       let bankNo = $('#select-bank').val();
+                       for(let i = 0; i < selected.length; i++){
+                           removeChannels.push(Number(selected[i].split('_')[2]));
                        }
-                   });
-    $(document).on('click', '#fn-remove-btn',
-                   function(){
-                       let selected = getSelectedChannel();
-                       if ( selected.length == 0 ){
-                           showErrorPopup('Please select channels to remove.');
-                       }else{
-                           let removeChannels = new Array;
-                           let bankNo = $('#select-bank').val();
-                           for(let i = 0; i < selected.length; i++){
-                               removeChannels.push(Number(selected[i].split('_')[2]));
-                           }
-                           currentMemoryData.removeChannel(bankNo, removeChannels);
-                           for(let i = 0; i < MEMORY_CHANNEL_NUM; i++){
-                               updateLine(i);
-                               $(`#line_selected_${i}`).prop('checked', false);
-                           }
-                       }
-                   });
-    $(document).on('click', '#fn-cut-btn',
-                   function(){
-                       let selected = getSelectedChannel();
-                       if ( selected.length == 0 ){
-                           showErrorPopup('Please select channels to cut.');
-                       }else{
-                           selectedChannels = new Array();
-                           selectedFunction = 'CUT';
-                           let multipleSelected = false;
-                           // sort!!
-                           for(let i = 0; i < selected.length; i++){
-                               if( i != 0 && Number(selected[i].split('_')[2]) != selectedChannels[i - 1][1] + 1 ){
-                                   multipleSelected = true;
-                                   break;
-                               }
-                               selectedChannels.push([Number($('#select-bank').val()), Number(selected[i].split('_')[2])]);
-                           }
-                           if ( multipleSelected ){
-                               selectedChannels = null;
-                               selectedFunction = null;
-                               showErrorPopup('This function can not be executed for multiple selection ranges.Please select one range and try again.');
-                           }else{
-                               $('#fn-info-message').text('Channels has been selected.');
-                               $('#fn-info').popup('open');
-                               for(let i = 0; i < selected.length; i++){
-                                   $(`#line_selected_${selectedChannels[i][1]}`).prop('checked', false);
-                               }
-
-                           }
-                       }
-                   });
-    $(document).on('click', '#fn-copy-btn',
-                   function(){
-                       let selected = getSelectedChannel();
-                       if ( selected.length == 0 ){
-                           showErrorPopup('Please select channels to copy.');
-                       }else{
-                           selectedChannels = new Array();
-                           selectedFunction = 'COPY';
-                           let multipleSelected = false;
-                           // sort!!
-                           for(let i = 0; i < selected.length; i++){
-                               if( i != 0 && Number(selected[i].split('_')[2]) != selectedChannels[i - 1][1] + 1 ){
-                                   multipleSelected = true;
-                                   break;
-                               }
-                               selectedChannels.push([Number($('#select-bank').val()), Number(selected[i].split('_')[2])]);
-                           }
-                           if ( multipleSelected ){
-                               selectedChannels = null;
-                               selectedFunction = null;
-                               showErrorPopup('This function can not be executed for multiple selection ranges.Please select one range and try again.');
-                           }else{
-                               $('#fn-info-message').text('Channels has been selected.');
-                               $('#fn-info').popup('open');
-                               for(let i = 0; i < selected.length; i++){
-                                   $(`#line_selected_${selectedChannels[i][1]}`).prop('checked', false);
-                               }
-                           }
-                       }
-                   });
-    $(document).on('click', '#fn-insert-btn',
-                   function(){
-                       let selected = getSelectedChannel();
-                       if ( selected.length == 0 ){
-                           showErrorPopup('Please select channels to insert.');
-                       }else{
-                           let insertDestination = null;
-                           for(let i = 0; i < selected.length; i++){
-                               if( insertDestination == null){
-                                   insertDestination = Number(selected[i].split('_')[2]);
-                               }
-                               if( insertDestination > Number(selected[i].split('_')[2]) ){
-                                   insertDestination = Number(selected[i].split('_')[2]);
-                               }
-                           }
-                           if( selectedFunction == 'CUT' ){
-                               if ( !currentMemoryData.cutInsertChannel($('#select-bank').val(),
-                                                                        selectedChannels,
-                                                                        insertDestination)){
-                                   showErrorPopup('The maximum number of channels that can be registered in the currently selected bank is exceeded.');
-                                   selectedChannels = null;
-                                   selectedFunction = null;
-                                   return;
-                               }
-                           }else if( selectedFunction == 'COPY' ){
-                               if( !currentMemoryData.copyInsertChannel($('#select-bank').val(),
-                                                                        selectedChannels,
-                                                                        insertDestination)){
-                                   showErrorPopup('The maximum number of channels that can be registered in the currently selected bank is exceeded.');
-                                   selectedChannels = null;
-                                   selectedFunction = null;
-                                   return;
-                               }
-                           }else{
-                               return;
-                           }
-                           for(let i = 0; i < MEMORY_CHANNEL_NUM; i++){
-                               updateLine(i);
-                               $(`#line_selected_${i}`).prop('checked', false);
-                           }
-                           selectedChannels = null;
-                           selectedFunction = null;
-                       }
-                   });
-    $(document).on('click', '#fn-moveup-btn',
-                   function(){
-                       let selected = getSelectedChannel();
-                       if ( selected.length == 0 ){
-                           showErrorPopup('Please select channels to move up.');
-                       }else{
-                           for(let i = 0; i < selected.length; i++){
-                               currentMemoryData.moveUpChannel($('#select-bank').val(), Number(selected[i].split('_')[2]));
-                           }
-                           for(let i = 0; i < MEMORY_CHANNEL_NUM; i++){
-                               updateLine(i);
-                               $(`#line_selected_${i}`).prop('checked', false);
-                           }
-                           for(let i = 0; i < selected.length; i++){
-                               if ( Number(selected[i].split('_')[2]) > -1 ){
-                                   $(`#line_selected_${Number(selected[i].split('_')[2]) - 1}`).prop('checked', true);
-                               }
-                           }
-
-                       }
-                   });
-    $(document).on('click', '#fn-movedown-btn',
-                   function(){
-                       let selected = getSelectedChannel();
-                       if ( selected.length == 0 ){
-                           showErrorPopup('Please select channels to move down.');
-                       }else{
-                           for(let i = selected.length - 1; i >= 0; i--){
-                               currentMemoryData.moveDownChannel($('#select-bank').val(), Number(selected[i].split('_')[2]));
-                           }
-                           for(let i = 0; i < MEMORY_CHANNEL_NUM; i++){
-                               updateLine(i);
-                               $(`#line_selected_${i}`).prop('checked', false);
-                           }
-                           for(let i = 0; i < selected.length; i++){
-                               if ( Number(selected[i].split('_')[2]) < MEMORY_CHANNEL_NUM ){
-                                   $(`#line_selected_${Number(selected[i].split('_')[2]) + 1}`).prop('checked', true);
-                               }
-                           }
-
-                       }
-                   });
-    $(document).on('click', '#fn-sort-btn',
-                   function(){
-                       $('#p-sort-options').empty();
-                       let sortOptions = new Array;
-                       if ( currentMemoryData ){
-                           if ( currentMemoryData.fileType == SD_BACKUP ){
-                               sortOptions = [{ priority: 1, row: 'Frequency', id: 'frequency'}, { priority: 2, row: 'Mode', id: 'mode' }];
-                           }else{
-                               sortOptions = [{ priority: 1, row: 'Mode', id: 'mode'}];
-                           }
-                           for(let i = 0;i < sortOptions.length; i++){
-                               $('#p-sort-options').append($('<tr>').append(
-                                   $('<td>', { text: sortOptions[i].priority }),
-                                   $('<td>', { text: sortOptions[i].row }),
-                                   $('<td>').append(
-                                       $('<select>', { id: `${sortOptions[i].id}-sort`} ).append(
-                                           $('<option>', { text: 'ASC', value: 'ASC' }),
-                                           $('<option>', { text: 'DESC', value: 'DESC' })
-                                       )
-                                   )
-                               ));
-                               $(`#${sortOptions[i].id}-sort`).selectmenu();
-                           }
-                           $('#p-sort').popup('open');
-                       }
-                   });
-    $(document).on('click', '#fn-multiple-data-create-btn',
-                   function(){
-                       let selected = getSelectedChannel();
-                       if ( selected.length == 0 ){
-                           showErrorPopup('Please select channels to create point.');
-                       }else{
-                           insertPoint = null;
-                           for(let i = 0; i < selected.length; i++){
-                               if(!insertPoint || insertPoint > Number(selected[i].split('_')[2]) ){
-                                   insertPoint = Number(selected[i].split('_')[2]);
-                               }
-                           }
-                           $('#insert-point').text(`No.${paddingZero(insertPoint)}`);
-                           // crear pop up error
-                           multipleDataCreateError = null;
-                           $('#p-multiple-data-create-frequency-from').val('frequency-list-file').selectmenu('refresh');
-                           selectFrequencyFrom($('#p-multiple-data-create-frequency-from').val());
-                           $('#p-number-of-additional-channels').val('').textinput('refresh');
-                           $('#p-start-frequency').val('').textinput('refresh');
-                           $('#p-step-frequency').val('').textinput('refresh');
-                           $('#multiple_data_create').popup('open');
-                       }
-                   });
-    /* sort */
-    $(document).on('click', '#sort-cancel-btn',
-                   function(){
-                       $('#p-sort').popup('close');
-                   });
-    $(document).on('click', '#execute-sort-btn',
-                   function(){
-                       let sortParam = [$('#frequency-sort').val(), $('#mode-sort').val()];
-                       currentMemoryData.sortChannel($('#select-bank').val(), sortParam);
+                       currentMemoryData.removeChannel(bankNo, removeChannels);
                        for(let i = 0; i < MEMORY_CHANNEL_NUM; i++){
                            updateLine(i);
+                           $(`#line_selected_${i}`).prop('checked', false);
                        }
-                       $('#p-sort').popup('close');
-                   });
-    /** muliple data create **/
-    $(document).on('click', '#multiple_data_create_cancel',
-                   function(){
-                       $('#p-template-file-error').text('');
-                       $('#p-frequency-list-file-error').text('');
-                       $('#p-start-frequency-error').text('');
-                       $('#p-step-frequency-error').text('');
-                       $('#p-number-of-additional-channels-error').text('');
+                   }
+               });
+$(document).on('click', '#fn-cut-btn',
+               function(){
+                   let selected = getSelectedChannel();
+                   if ( selected.length == 0 ){
+                       showErrorPopup('Please select channels to cut.');
+                   }else{
+                       selectedChannels = new Array();
+                       selectedFunction = 'CUT';
+                       let multipleSelected = false;
+                       // sort!!
+                       for(let i = 0; i < selected.length; i++){
+                           if( i != 0 && Number(selected[i].split('_')[2]) != selectedChannels[i - 1][1] + 1 ){
+                               multipleSelected = true;
+                               break;
+                           }
+                           selectedChannels.push([Number($('#select-bank').val()), Number(selected[i].split('_')[2])]);
+                       }
+                       if ( multipleSelected ){
+                           selectedChannels = null;
+                           selectedFunction = null;
+                           showErrorPopup('This function can not be executed for multiple selection ranges.Please select one range and try again.');
+                       }else{
+                           $('#fn-info-message').text('Channels has been selected.');
+                           $('#fn-info').popup('open');
+                           for(let i = 0; i < selected.length; i++){
+                               $(`#line_selected_${selectedChannels[i][1]}`).prop('checked', false);
+                           }
 
+                       }
+                   }
+               });
+$(document).on('click', '#fn-copy-btn',
+               function(){
+                   let selected = getSelectedChannel();
+                   if ( selected.length == 0 ){
+                       showErrorPopup('Please select channels to copy.');
+                   }else{
+                       selectedChannels = new Array();
+                       selectedFunction = 'COPY';
+                       let multipleSelected = false;
+                       // sort!!
+                       for(let i = 0; i < selected.length; i++){
+                           if( i != 0 && Number(selected[i].split('_')[2]) != selectedChannels[i - 1][1] + 1 ){
+                               multipleSelected = true;
+                               break;
+                           }
+                           selectedChannels.push([Number($('#select-bank').val()), Number(selected[i].split('_')[2])]);
+                       }
+                       if ( multipleSelected ){
+                           selectedChannels = null;
+                           selectedFunction = null;
+                           showErrorPopup('This function can not be executed for multiple selection ranges.Please select one range and try again.');
+                       }else{
+                           $('#fn-info-message').text('Channels has been selected.');
+                           $('#fn-info').popup('open');
+                           for(let i = 0; i < selected.length; i++){
+                               $(`#line_selected_${selectedChannels[i][1]}`).prop('checked', false);
+                           }
+                       }
+                   }
+               });
+$(document).on('click', '#fn-insert-btn',
+               function(){
+                   let selected = getSelectedChannel();
+                   if ( selected.length == 0 ){
+                       showErrorPopup('Please select channels to insert.');
+                   }else{
+                       let insertDestination = null;
+                       for(let i = 0; i < selected.length; i++){
+                           if( insertDestination == null){
+                               insertDestination = Number(selected[i].split('_')[2]);
+                           }
+                           if( insertDestination > Number(selected[i].split('_')[2]) ){
+                               insertDestination = Number(selected[i].split('_')[2]);
+                           }
+                       }
+                       if( selectedFunction == 'CUT' ){
+                           if ( !currentMemoryData.cutInsertChannel($('#select-bank').val(),
+                                                                    selectedChannels,
+                                                                    insertDestination)){
+                               showErrorPopup('The maximum number of channels that can be registered in the currently selected bank is exceeded.');
+                               selectedChannels = null;
+                               selectedFunction = null;
+                               return;
+                           }
+                              }else if( selectedFunction == 'COPY' ){
+                           if( !currentMemoryData.copyInsertChannel($('#select-bank').val(),
+                                                                    selectedChannels,
+                                                                    insertDestination)){
+                               showErrorPopup('The maximum number of channels that can be registered in the currently selected bank is exceeded.');
+                               selectedChannels = null;
+                               selectedFunction = null;
+                               return;
+                           }
+                       }else{
+                           return;
+                       }
+                       for(let i = 0; i < MEMORY_CHANNEL_NUM; i++){
+                           updateLine(i);
+                           $(`#line_selected_${i}`).prop('checked', false);
+                       }
+                       selectedChannels = null;
+                       selectedFunction = null;
+                   }
+               });
+$(document).on('click', '#fn-moveup-btn',
+               function(){
+                   let selected = getSelectedChannel();
+                   if ( selected.length == 0 ){
+                       showErrorPopup('Please select channels to move up.');
+                   }else{
+                       for(let i = 0; i < selected.length; i++){
+                           currentMemoryData.moveUpChannel($('#select-bank').val(), Number(selected[i].split('_')[2]));
+                       }
+                       for(let i = 0; i < MEMORY_CHANNEL_NUM; i++){
+                           updateLine(i);
+                           $(`#line_selected_${i}`).prop('checked', false);
+                       }
+                       for(let i = 0; i < selected.length; i++){
+                           if ( Number(selected[i].split('_')[2]) > -1 ){
+                               $(`#line_selected_${Number(selected[i].split('_')[2]) - 1}`).prop('checked', true);
+                           }
+                       }
+
+                   }
+               });
+$(document).on('click', '#fn-movedown-btn',
+               function(){
+                   let selected = getSelectedChannel();
+                   if ( selected.length == 0 ){
+                       showErrorPopup('Please select channels to move down.');
+                   }else{
+                       for(let i = selected.length - 1; i >= 0; i--){
+                           currentMemoryData.moveDownChannel($('#select-bank').val(), Number(selected[i].split('_')[2]));
+                       }
+                       for(let i = 0; i < MEMORY_CHANNEL_NUM; i++){
+                           updateLine(i);
+                           $(`#line_selected_${i}`).prop('checked', false);
+                       }
+                       for(let i = 0; i < selected.length; i++){
+                           if ( Number(selected[i].split('_')[2]) < MEMORY_CHANNEL_NUM ){
+                               $(`#line_selected_${Number(selected[i].split('_')[2]) + 1}`).prop('checked', true);
+                           }
+                       }
+
+                   }
+               });
+$(document).on('click', '#fn-sort-btn',
+               function(){
+                   $('#p-sort-options').empty();
+                   let sortOptions = new Array;
+                   if ( currentMemoryData ){
+                       if ( currentMemoryData.fileType == SD_BACKUP ){
+                           sortOptions = [{ priority: 1, row: 'Frequency', id: 'frequency'}, { priority: 2, row: 'Mode', id: 'mode' }];
+                       }else{
+                           sortOptions = [{ priority: 1, row: 'Mode', id: 'mode'}];
+                       }
+                       for(let i = 0;i < sortOptions.length; i++){
+                           $('#p-sort-options').append($('<tr>').append(
+                               $('<td>', { text: sortOptions[i].priority }),
+                               $('<td>', { text: sortOptions[i].row }),
+                               $('<td>').append(
+                                   $('<select>', { id: `${sortOptions[i].id}-sort`} ).append(
+                                       $('<option>', { text: 'ASC', value: 'ASC' }),
+                                       $('<option>', { text: 'DESC', value: 'DESC' })
+                                   )
+                               )
+                           ));
+                           $(`#${sortOptions[i].id}-sort`).selectmenu();
+                       }
+                       $('#p-sort').popup('open');
+                   }
+               });
+$(document).on('click', '#fn-multiple-data-create-btn',
+               function(){
+                   let selected = getSelectedChannel();
+                   if ( selected.length == 0 ){
+                       showErrorPopup('Please select channels to create point.');
+                   }else{
+                       insertPoint = null;
+                       for(let i = 0; i < selected.length; i++){
+                           if(!insertPoint || insertPoint > Number(selected[i].split('_')[2]) ){
+                               insertPoint = Number(selected[i].split('_')[2]);
+                           }
+                       }
+                       $('#insert-point').text(`No.${paddingZero(insertPoint)}`);
+                       // crear pop up error
+                       multipleDataCreateError = null;
+                       $('#p-multiple-data-create-frequency-from').val('frequency-list-file').selectmenu('refresh');
+                       selectFrequencyFrom($('#p-multiple-data-create-frequency-from').val());
+                       $('#p-number-of-additional-channels').val('').textinput('refresh');
+                       $('#p-start-frequency').val('').textinput('refresh');
+                       $('#p-step-frequency').val('').textinput('refresh');
+                       $('#multiple_data_create').popup('open');
+                   }
+               });
+/* sort */
+$(document).on('click', '#sort-cancel-btn',
+               function(){
+                   $('#p-sort').popup('close');
+               });
+$(document).on('click', '#execute-sort-btn',
+               function(){
+                   let sortParam = [$('#frequency-sort').val(), $('#mode-sort').val()];
+                   currentMemoryData.sortChannel($('#select-bank').val(), sortParam);
+                   for(let i = 0; i < MEMORY_CHANNEL_NUM; i++){
+                       updateLine(i);
+                   }
+                   $('#p-sort').popup('close');
+               });
+/** muliple data create **/
+$(document).on('click', '#multiple_data_create_cancel',
+               function(){
+                   $('#p-template-file-error').text('');
+                   $('#p-frequency-list-file-error').text('');
+                   $('#p-start-frequency-error').text('');
+                   $('#p-step-frequency-error').text('');
+                   $('#p-number-of-additional-channels-error').text('');
+
+                   for(let i = 0; i < MEMORY_CHANNEL_NUM; i++){
+                       $(`#line_selected_${i}`).prop('checked', false);
+                   }
+                   $('#multiple_data_create').popup('close');
+               });
+$(document).on('change', '#p-multiple-data-create-frequency-from',
+               function(){
+                   selectFrequencyFrom($(this).val());
+               });
+$(document).on('change', '#p-template-file',
+               function(){
+                   readFile($(this)).then(
+                       function(readData){
+                           templateData = readDataToObject(readData);
+                       },
+                       function(error){
+                           showErrorPopup('An error occurred while reading the template file.');
+                           return false;
+                       });
+               });
+$(document).on('change', '#p-frequency-list-file',
+               function(){
+                    readFile($(this)).then(
+                       function(readData){
+                           frequencyList = new Array;
+                           for(let i = 0; i < readData.length; i++){
+                               frequencyList.push(readData[i]);
+                            }
+                       },
+                       function(error){
+                           showErrorPopup('An error occurred while reading the frequency list file.');
+                           return false;
+                       });
+               });
+$(document).on('click', '#p-multiple-data-create-btn',
+               function(){
+                   if( !multipleDataCreateCheck() ){
+                       let result = multipleDataCreate();
+                       if( result == 0 ){
+                           for(let i = 0; i < MEMORY_CHANNEL_NUM; i++){
+                               updateLine(i);
+                               $(`#line_selected_${i}`).prop('checked', false);
+                           }
+                       }else{
+                           multipleDataCreateError = result;
+                       }
                        for(let i = 0; i < MEMORY_CHANNEL_NUM; i++){
                            $(`#line_selected_${i}`).prop('checked', false);
                        }
                        $('#multiple_data_create').popup('close');
-                   });
-    $(document).on('change', '#p-multiple-data-create-frequency-from',
-                   function(){
-                       selectFrequencyFrom($(this).val());
-                   });
-    $(document).on('change', '#p-template-file',
-                   function(){
-                       readFile($(this)).then(
-                           function(readData){
-                               templateData = readDataToObject(readData);
-                           },
-                           function(error){
-                               showErrorPopup('An error occurred while reading the template file.');
-                               return false;
-                           });
-                   });
-    $(document).on('change', '#p-frequency-list-file',
-                   function(){
-                       readFile($(this)).then(
-                           function(readData){
-                               frequencyList = new Array;
-                               for(let i = 0; i < readData.length; i++){
-                                   frequencyList.push(readData[i]);
-                               }
-                           },
-                           function(error){
-                               showErrorPopup('An error occurred while reading the frequency list file.');
-                               return false;
-                           });
-                   });
-    $(document).on('click', '#p-multiple-data-create-btn',
-                   function(){
-                       if( !multipleDataCreateCheck() ){
-                           let result = multipleDataCreate();
-                           if( result == 0 ){
-                               for(let i = 0; i < MEMORY_CHANNEL_NUM; i++){
-                                   updateLine(i);
-                                   $(`#line_selected_${i}`).prop('checked', false);
-                               }
-                           }else{
-                               multipleDataCreateError = result;
-                           }
-                           for(let i = 0; i < MEMORY_CHANNEL_NUM; i++){
-                               $(`#line_selected_${i}`).prop('checked', false);
-                           }
-                           $('#multiple_data_create').popup('close');
-                       };
-                   });
-    $(document).on('popupafterclose', '#multiple_data_create',
-                   function(){
-                       switch( multipleDataCreateError ){
-                       case -1:
-                           showErrorPopup('There are already registered channels in the creation range.');
-                           break;
-                       case -2:
-                           showErrorPopup('Frequency invalid.');
-                           break;
-                       case -3:
-                           showErrorPopup('The channel you are trying to register exceeds the size of the bank.');
-                           break;
-                       default:
-                           //
-                       }
-                   });
-    /** save file **/
-    $(document).on('click', '#export_csv',
-                   function(){
-                       if( isValidSaveFilename() ){
-                           $('#p-save-file').popup('close');
-                           let saveFilename = $('#p-save-filename').val().replace(/\.csv/,'') + '.csv';
-                           let saveModel = $('#model').val();
-                           jsonToCsv(saveModel, saveFilename);
-                       }
-                   });
-    $(document).on('click', '#save_cancel',
-                   function(){
+                   };
+               });
+$(document).on('popupafterclose', '#multiple_data_create',
+               function(){
+                   switch( multipleDataCreateError ){
+                   case -1:
+                       showErrorPopup('There are already registered channels in the creation range.');
+                       break;
+                   case -2:
+                       showErrorPopup('Frequency invalid.');
+                       break;
+                   case -3:
+                       showErrorPopup('The channel you are trying to register exceeds the size of the bank.');
+                       break;
+                   default:
+                       //
+                   }
+               });
+/** save file **/
+$(document).on('click', '#export_csv',
+               function(){
+                   if( isValidSaveFilename() ){
                        $('#p-save-file').popup('close');
-                   });
-    /** new file **/
-    $(document).on('click', '#create-file',
-                   function(){
-                       switch( $('#new-file-type').val() ){
-                       case 'memory-channel-file':
-                           currentMemoryData = newMemoryData($('#new-file-model').val(), SD_BACKUP);
-                           setEditMode(SD_BACKUP);
-                           $('#file-name').text('(New File)');
-                           $('#new_file').popup('close');
-                           break;
-                       case 'template-file':
-                           currentMemoryData = newMemoryData($('#new-file-model').val(), TEMPLATE_FILE);
-                           setEditMode(TEMPLATE_FILE);
-                           $('#file-name').text('(New Template File)');
-                           $('#new_file').popup('close');
-                           break;
-                       default:
-                           currentMemoryData = newMemoryData($('#new-file-model').val(), SD_BACKUP);
-                           setEditMode(SD_BACKUP);
-                           $('#file-name').text('(New File)');
-                           $('#new_file').popup('close');
-                           break;
-                       }
-                   });
-    $(document).on('click', '#new-cancel',
-                   function(){
+                       jsonToCsv($('#model').val(), $('#p-save-filename').val().replace(/\.csv/,'') + '.csv');
+                   }
+               });
+$(document).on('click', '#save_cancel',
+               function(){
+                   $('#p-save-file').popup('close');
+               });
+/** new file **/
+$(document).on('click', '#create-file',
+               function(){
+                   switch( $('#new-file-type').val() ){
+                   case 'memory-channel-file':
+                       currentMemoryData = newMemoryData($('#new-file-model').val(), SD_BACKUP);
+                       setEditMode(SD_BACKUP);
+                       $('#file-name').text('(New File)');
                        $('#new_file').popup('close');
-                   });
-    /** error**/
-    $(document).on('click', '#fn-error-close',
-                   function(){
-                       $('#fn-error').popup('close');
-                   });
-    /** complete **/
-    $(document).on('click', '#fn-complete-close',
-                   function(){
-                       $('#fn-complete').popup('close');
-                   });
-    /** warning **/
-    $(document).on('click', '#fn-warning-close',
-                   function(){
-                       functionStore.pop(); //delete
-                       hideWarningPopup();
-                   });
-    $(document).on('popupafterclose', '#fn-warning',
-                   function(){
-                       let afterFunction = functionStore.pop();
-                       if( afterFunction ){
-                           afterFunction();
-                       }
-                   });
-    /** info **/
-    $(document).on('click', '#fn-info-close',
-                   function(){
-                       $('#fn-info').popup('close');
-                   });
-});
+                       break;
+                   case 'template-file':
+                       currentMemoryData = newMemoryData($('#new-file-model').val(), TEMPLATE_FILE);
+                       setEditMode(TEMPLATE_FILE);
+                       $('#file-name').text('(New Template File)');
+                       $('#new_file').popup('close');
+                       break;
+                   default:
+                       currentMemoryData = newMemoryData($('#new-file-model').val(), SD_BACKUP);
+                       setEditMode(SD_BACKUP);
+                       $('#file-name').text('(New File)');
+                       $('#new_file').popup('close');
+                       break;
+                   }
+               });
+$(document).on('click', '#new-cancel',
+               function(){
+                   $('#new_file').popup('close');
+               });
+/** error**/
+$(document).on('click', '#fn-error-close',
+               function(){
+                   $('#fn-error').popup('close');
+               });
+/** info **/
+$(document).on('click', '#fn-info-close',
+               function(){
+                   $('#fn-info').popup('close');
+               });

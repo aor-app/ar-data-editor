@@ -1,4 +1,5 @@
-const VERSION = '1.1.1';
+/*! const.js | v1.1.6 2019/10 AOR, LTD. | https://github.com/aor-app/ar-data-editor */
+const VERSION = '1.1.6';
 const MEMORY_BANK_NUM = 40;
 const MEMORY_CHANNEL_NUM = 50;
 const SD_BACKUP = 'SD-BACKUP';
@@ -46,7 +47,7 @@ const MC = {
     MC3_ROWNAME:                 35,
     DMR_COLOR_CODE:              36,
     DMR_MUTE_BY_COLOR_CODE:      37,
-    DUMMY6:                      38,
+    T_TC_SLOT_NUMBER:            38,
     APCO_P_25_NAC_CODE:          39,
     APCO_P_25_MUTE_BY_NAC_CODE:  40,
     DUMMY7:                      41,
@@ -70,6 +71,7 @@ const MODE = {
     DPMR: { value: '005', name: 'dPMR'},
     DMR:  { value: '006', name: 'DMR'},
     T_DM: { value: '007', name: 'T-DM'},
+    T_TC: { value: '008', name: 'T-TC'},
     AUTO: { value: '128', name: 'AUTO'}
 };
 const SQUELCH_TYPE = {
@@ -95,6 +97,7 @@ const MODEL = {
                 MODE.DPMR,
                 MODE.DMR,
                 MODE.T_DM,
+                MODE.T_TC,
                 MODE.AUTO
               ],
         squelchType: [
@@ -120,6 +123,7 @@ const MODEL = {
                 MODE.DPMR,
                 MODE.DMR,
                 MODE.T_DM,
+                MODE.T_TC,
                 MODE.AUTO
               ],
         squelchType: [

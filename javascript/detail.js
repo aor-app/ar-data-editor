@@ -1,3 +1,4 @@
+/*! detail.js | v1.1.6 2019/10 AOR, LTD. | https://github.com/aor-app/ar-data-editor */
 function selectMode(selectedMode){
     function setDetailIFBW(selectedMode){
         $('#d-if-bandwidth').empty();
@@ -70,6 +71,9 @@ function selectMode(selectedMode){
         case MODE.T_DM.value:
             $('#d-if-bandwidth').val('2');
             break;
+        case MODE.T_TC.value:
+            $('#d-if-bandwidth').val('2');
+            break;
         case MODE.AUTO.value:
             $('#d-if-bandwidth').val('3');
             break;
@@ -102,6 +106,7 @@ function selectMode(selectedMode){
         case MODE.DPMR.value:
         case MODE.DMR.value:
         case MODE.T_DM.value:
+        case MODE.T_TC.value:
         case MODE.AUTO.value: //current_channel.digitalModeEnable == '1'
             $('#d-if-bandwidth').selectmenu('disable');
             break;
@@ -163,6 +168,11 @@ function selectMode(selectedMode){
         $('#f-nxdn-mute-by-ran-code').hide();
         $('#f-nxdn-ran-code').hide();
     }
+    if ( selectedMode == MODE.T_TC.value ){
+        $('#f-ttc-slot-number').show();
+    }else{
+        $('#f-ttc-slot-number').hide();
+    }
     switch( selectedMode ){
     case MODE.AM.value:
     case MODE.SAH.value:
@@ -184,6 +194,7 @@ function selectMode(selectedMode){
     case MODE.DPMR.value:
     case MODE.DMR.value:
     case MODE.T_DM.value:
+    case MODE.T_TC.value:
     case MODE.AUTO.value: //current_channel.digitalModeEnable == '1'
         $('#f-digital-data-output').show();
         break;
@@ -293,8 +304,6 @@ function showOffsetIndexValue( offsetIndex ){
     }
 }
 function selectFrequencyStep( frequencyStepValue ){
-    console.log('-----');
-    console.log(frequencyStepValue);
     $('#d-frequency-step').val(frequencyStepValue).selectmenu('refresh');
     $('#d-step-adjust-frequency').empty();
     let frequencyStepkey = Object.keys(FREQUENCY_STEP).filter(function( key ){ return FREQUENCY_STEP[key].value == frequencyStepValue });
@@ -437,6 +446,7 @@ function setDetail(){
     $('#d-apco-p25-nac-code').val((current_channel.apcoP25NACCode).substr(2,3));
     $('#d-nxdn-mute-by-ran-code').val(current_channel.nxdnMuteByRANCode).flipswitch('refresh');
     $('#d-nxdn-ran-code').val(current_channel.nxdnRANCode).selectmenu('refresh');
+    $('#d-ttc-slot-number').val(current_channel.ttcSlotNumber).selectmenu('refresh');
     $('#d-digital-data-output').val(current_channel.digitalDataOutput).flipswitch('refresh');
     $('#d-voice-squelch').text(current_channel.voiceSquelch);
     $('#d-auto-notch').text(current_channel.autoNotchName());
@@ -542,6 +552,7 @@ function channelConfirm(){
     case MODE.DPMR.value:
     case MODE.DMR.value:
     case MODE.T_DM.value:
+    case MODE.T_TC.value:
     case MODE.AUTO.value:
         current_channel.digitalModeEnable = '1';
         current_channel.digitalDecodeMode = $('#d-mode').val();
@@ -568,7 +579,7 @@ function channelConfirm(){
     current_channel.dcsCode = $('#d-dcs-code').val();
     current_channel.agc = $('input[name="agc"]:checked').val();
     current_channel.offsetIndex = ($('#d-offset-index-sign').val() == 'minus' ? '-':'+') + $('#d-offset-index').val();
-    current_channel.dcrEncryptionCode = $('#d-dcr-encryption-code').val();
+    current_channel.dcrEncryptionCode = ( '0000' + $('#d-dcr-encryption-code').val()).slice(-5);
     current_channel.dmrSlotSelection = $('input[name="dmrslot"]:checked').val();
     current_channel.dmrMuteByColorCode = $('#d-dmr-mute-by-color-code').val();
     current_channel.dmrColorCode = $('#d-dmr-color-code').val();
@@ -576,6 +587,7 @@ function channelConfirm(){
     current_channel.apcoP25NACCode = $('#d-apco-p25-nac-code').val();
     current_channel.nxdnMuteByRANCode = $('#d-nxdn-mute-by-ran-code').val();
     current_channel.nxdnRANCode = $('#d-nxdn-ran-code').val();
+    current_channel.ttcSlotNumber = $('#d-ttc-slot-number').val();
     current_channel.digitalDataOutput = $('#d-digital-data-output').val();
     current_channel.channelRegistedFlg = '1';
 }
